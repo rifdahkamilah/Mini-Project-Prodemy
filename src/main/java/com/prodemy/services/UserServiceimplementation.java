@@ -5,6 +5,7 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import com.prodemy.entity.Role;
@@ -33,7 +34,7 @@ public class UserServiceImplementation implements UserService {
         User user = new User();
         user.setEmail(registrationDto.getEmail());
         user.setName(registrationDto.getName());
-        user.setPassword(registrationDto.getPassword());
+        user.setPassword(BCrypt.hashpw(registrationDto.getPassword(), BCrypt.gensalt()));
         user.setRole(role);
 
         return userRepository.save(user);
@@ -56,15 +57,15 @@ public class UserServiceImplementation implements UserService {
     public void editUser(User user, RequestEditUser req) {
         validator.validate(req);
 
-        if ects.nonNull(req.getEmail())){
+        if (Objects.nonNull(req.getEmail())) {
             user.setEmail(req.getEmail());
         }
 
-        if ects.nonNull(req.getPassword())){
+        if (Objects.nonNull(req.getPassword())) {
             user.setPassword(req.getPassword());
         }
 
-        if ects.nonNull(req.getName())){
+        if (Objects.nonNull(req.getName())) {
             user.setName(req.getName());
         }
 
