@@ -1,10 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    Aku adalah registration
-</body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="flex flex-col justify-center items-center min-h-screen">
+      <div th:if="${param.success}">
+        <div class="alert alert-success mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Account Registration Succesfull!</span>
+        </div>
+      </div>
+      <div class="card w-96 bg-white shadow-xl py-4">
+        <h1 class="text-center text-3xl text-black font-bold">Sign In</h1>
+        <div class="card-body">
+          <form th:action="@{/registration}" th:object="${user}" method="POST">
+            <div class="flex flex-col text-black gap-4">
+              <div class="flex flex-col">
+                <label for="name">Full Name</label>
+                <input type="text" name="name" id="name" th:field="*{name}" class="rounded p-1 bg-white border-black border-2" />
+              </div>
+              <div class="flex flex-col">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" th:field="*{email}" class="rounded p-1 bg-white border-black border-2" />
+              </div>
+              <div class="flex flex-col">
+                <label for="password">Password</label>
+                <input type="password" name="password" th:field="*{password}" class="rounded p-1 bg-white border-black border-2" />
+                <p>Have an account? <a th:href="@{/login}" class="text-primary hover:underline hover:text-blue-900">Login Here</a></p>
+              </div>
+              <div class="flex w-full justify-center">
+                <button class="btn btn-primary px-10">Sign In</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
