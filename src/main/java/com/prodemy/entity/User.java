@@ -3,7 +3,6 @@ package com.prodemy.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
@@ -13,12 +12,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
+@Entity
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "users")
 public class User {
 
     @Id
@@ -27,7 +26,7 @@ public class User {
 
     private String name;
 
-    private String email;
+    private String email;  
 
     private String password;
 
@@ -47,14 +46,17 @@ public class User {
     }
 
     public void setId(Long id) {
+
         this.id = id;
     }
 
     public String getName() {
+
         return name;
     }
 
     public void setName(String name) {
+
         this.name = name;
     }
 
@@ -81,4 +83,5 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
 }

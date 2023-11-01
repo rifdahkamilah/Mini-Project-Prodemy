@@ -1,6 +1,6 @@
 package com.prodemy.web;
 
-import com.prodemy.service.UserService;
+import com.prodemy.services.UserService;
 import com.prodemy.web.dto.UserRegistrationDto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;

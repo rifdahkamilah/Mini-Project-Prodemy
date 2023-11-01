@@ -1,8 +1,9 @@
-package com.prodemy.service;
+package com.prodemy.services;
 
 import com.prodemy.entity.User;
 import com.prodemy.entity.Role;
 import com.prodemy.repository.UserRepository;
+import com.prodemy.services.UserService;
 import com.prodemy.web.dto.UserRegistrationDto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 @NoArgsConstructor
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
@@ -25,7 +26,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User save(UserRegistrationDto registrationDto) {
-        User user = new User(registrationDto.getName(), registrationDto.getEmail(), registrationDto.getPassword(), (Role) Arrays.asList(new Role("ROLE_USER")));
+        User user = new User(registrationDto.getName(), registrationDto.getEmail(), registrationDto.getPassword(), Arrays.asList(new Role("ROLE_USER")));
 
         return userRepository.save(user);
     }

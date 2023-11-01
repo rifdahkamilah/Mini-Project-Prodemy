@@ -1,4 +1,4 @@
-package com.prodemy.service;
+package com.prodemy.services;
 
 import com.prodemy.entity.User;
 import com.prodemy.web.dto.UserRegistrationDto;
