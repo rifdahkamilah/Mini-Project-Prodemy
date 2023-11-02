@@ -1,6 +1,6 @@
 package com.prodemy.controller;
 
-import com.prodemy.entity.User;
+import com.prodemy.entity.UserEntity;
 import com.prodemy.model.UserDto;
 import com.prodemy.services.UserService;
 import lombok.AllArgsConstructor;

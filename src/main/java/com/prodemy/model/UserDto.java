@@ -2,6 +2,7 @@ package com.prodemy.model;
 
 import com.prodemy.entity.Role;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserDto {
     @NotBlank
     @Size(max = 100)
+    @Email
     private String email;
 
     @NotBlank
