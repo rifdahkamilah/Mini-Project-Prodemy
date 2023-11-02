@@ -18,9 +18,4 @@ public interface UserService extends UserDetailsService {
 //
 //    public void saveUser(User user);
     public void editUser(UserEntity user, RequestEditUser userDto);
-    List<Product> getAllProducts();
-
-    Product getProductById(Long id);
-
-    void addToCart(Long id);
 }

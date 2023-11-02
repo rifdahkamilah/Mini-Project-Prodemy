@@ -115,20 +115,4 @@ public class UserServiceimplementation implements UserService {
 
         userRepository.save(user);
     }
-
-    @Override
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
-
-    @Override
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
-    }
-
-   @Override
-    public void addToCart(Long id) {
-
-    }
-
 }
