@@ -9,4 +9,5 @@ import com.prodemy.model.UserDto;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     public UserDto findByEmail(String email);
+//    public UserDto findByName(String name);
 }

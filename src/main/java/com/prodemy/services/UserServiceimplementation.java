@@ -1,6 +1,7 @@
 package com.prodemy.services;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,5 +48,22 @@ public class UserServiceImplementation implements UserService {
         return (UserDetails) user;
 
     }
+
+//    @Override
+//    public User getUserById(long id) {
+//        Optional<User> optional = userRepository.findById(id);
+//        User user = null;
+//        if(optional.isPresent()) {
+//            user = optional.get();
+//        } else {
+//            throw new RuntimeException("User tidak dapat ditemukan :: " + id);
+//        }
+//        return user;
+//    }
+//
+//    @Override
+//    public void saveUser(User user) {
+//        this.userRepository.save(user);
+//    }
 
 }
