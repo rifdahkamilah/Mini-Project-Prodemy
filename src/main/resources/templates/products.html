@@ -18,9 +18,9 @@
     <tbody>
     <tr th:each="product : ${products}">
 <!--        <td><img th:src="${product.imageUrl}" alt="Product Image" width="100" height="100" /></td>-->
-        <td th:text="${productName}">Product Name</td>
-        <td th:text="${productDescription}">Product Description</td>
-        <td th:text="${productPrice}">Product Price</td>
+        <td th:text="${product.productName}">Product Name</td>
+        <td th:text="${product.productDescription}">Product Description</td>
+        <td th:text="${product.productPrice}">Product Price</td>
         <td><button th:onclick="'addToCart(' + ${id} + ')'" type="button">Add to Cart</button></td>
     </tr>
     </tbody>

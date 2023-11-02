@@ -4,7 +4,7 @@ import java.util.*;
 
 import java.util.stream.Collectors;
 
-import com.prodemy.entity.Products;
+import com.prodemy.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,6 +40,9 @@ public class UserServiceImplementation implements UserService {
 
     @Autowired
     private ValidationService validator;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public UserEntity save(UserDto registrationDto) {
@@ -111,6 +114,21 @@ public class UserServiceImplementation implements UserService {
         }
 
         userRepository.save(user);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    @Override
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+   @Override
+    public void addToCart(Long id) {
+
     }
 
 }

@@ -1,6 +1,6 @@
 package com.prodemy.controller;
 
-import com.prodemy.entity.Products;
+import com.prodemy.entity.Product;
 import com.prodemy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class ProductController {
 
     @GetMapping
     public String listProducts(Model model) {
-        List<Products> products = productRepository.findAll();
+        List<Product> products = productRepository.findAll();
         model.addAttribute("products", products);
         return "products";
     }
