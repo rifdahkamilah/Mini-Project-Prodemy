@@ -1,7 +1,10 @@
 package com.prodemy.entity;
 
+import java.util.Collection;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,29 +18,10 @@ import lombok.Setter;
 @Setter
 @Table(name = "role")
 public class Role {
+
     @Id
     private long id;
 
     private String name;
 
-//    public Role(String name) {
-//        super();
-//        this.name = name;
-//    }
-//
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getName() {
-//        return name;
-//    }
-//
-//    public void setName(String name) {
-//        this.name = name;
-//    }
 }
