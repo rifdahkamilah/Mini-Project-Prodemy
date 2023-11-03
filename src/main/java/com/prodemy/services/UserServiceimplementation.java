@@ -87,7 +87,11 @@ public class UserServiceimplementation implements UserService {
             user.setEmail(req.getEmail());
         }
 
-        if (Objects.nonNull(req.getPassword()) && req.getPassword() != "") {
+        System.out.println("password request : " + req.getPassword());
+        System.out.println("apakah benar?");
+        System.out.println(req.getPassword() != "");
+
+        if (req.getPassword() != "") {
             user.setPassword(passwordEncoder.encode(req.getPassword()));
         }
 

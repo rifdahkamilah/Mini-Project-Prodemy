@@ -6,7 +6,7 @@
   </head>
   <body>
     <h1>Edit Profile</h1>
-    <form th:action="@{/users/edit/current}" th:method="get" th:object="${user}">
+    <form th:action="@{/users/edit/current}" th:method="post" th:object="${user}">
       <div class="form-group">
         <label for="username">Username</label>
         <input type="text" id="username" name="username" th:field="*{name}" />
