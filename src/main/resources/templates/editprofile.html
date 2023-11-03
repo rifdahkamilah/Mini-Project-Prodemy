@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Edit Profile</title>
-</head>
-<body>
-<h1>Edit Profile</h1>
-<form th:action="@{/edit-profile}" method="post" th:object="${user}">
-    <div class="form-group">
+  </head>
+  <body>
+    <h1>Edit Profile</h1>
+    <form th:action="@{/users/edit/current}" th:method="get" th:object="${user}">
+      <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" th:field="*{username}" />
-    </div>
-    <div class="form-group">
+        <input type="text" id="username" name="username" th:field="*{name}" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" th:field="*{email}" />
+      </div>
+      <div class="form-group">
         <label for="password">Password</label>
         <input type="password" id="password" name="password" th:field="*{password}" />
-    </div>
-    <button type="submit">Edit</button>
-</form>
-</body>
+      </div>
+      <button type="submit">Save</button>
+    </form>
+    <a th:href="@{/users/view/current}"><button>Batal Edit</button></a>
+  </body>
 </html>

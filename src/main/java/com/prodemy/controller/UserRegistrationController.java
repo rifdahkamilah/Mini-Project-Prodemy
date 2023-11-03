@@ -58,10 +58,6 @@ public class UserRegistrationController {
 //        return "redirect:/";	// buat menambahkan mahasiswa
 //    }
 
-    @PatchMapping
-    public String editUserAccount(@ModelAttribute("user") UserDto registrationDto) {
-        userService.save(registrationDto);
-        return "redirect:/registration?success";
-    }
+    
 
 }

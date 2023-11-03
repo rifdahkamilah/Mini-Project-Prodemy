@@ -10,9 +10,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.prodemy.entity.Role;
 import org.springframework.security.core.userdetails.User;
@@ -41,10 +44,8 @@ public class UserServiceimplementation implements UserService {
     @Autowired
     private ValidationService validator;
 
-    @Autowired
-    private ProductRepository productRepository;
-
     @Override
+    @Transactional
     public UserEntity save(UserDto registrationDto) {
         validator.validate(registrationDto);
         Role role = roleRepository.findById(1L).orElse(null);
@@ -65,48 +66,29 @@ public class UserServiceimplementation implements UserService {
             throw new UsernameNotFoundException("Invalid username or password");
         }
         validator.validate(req);
+        log.info("request {} ", req);
 
         User user = new User(req.getEmail(), req.getPassword(),
                 getAuthorities(req.getRoles()));
         return user;
-
     }
-//    @Override
-//    public User getUserById(long id) {
-//        Optional<User> optional = userRepository.findById(id);
-//        User user = null;
-//        if(optional.isPresent()) {
-//            user = optional.get();
-//        } else {
-//            throw new RuntimeException("User tidak dapat ditemukan :: " + id);
-//        }
-//        return user;
-//    }
-//
-//    @Override
-//    public void saveUser(User user) {
-//        this.userRepository.save(user);
-//    }
-    // public Collection<? extends GrantedAuthority> getRoles() {
-    // Authentication authentication =
-    // SecurityContextHolder.getContext().getAuthentication();
-    // return authentication.getAuthorities();
-    // }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
         return roles.stream().map((role) -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
     @Override
-    public void editUser(UserEntity user, RequestEditUser req) {
+    public void editUser(String email, RequestEditUser req) {
         validator.validate(req);
+
+        UserEntity user = userRepository.findByEmail(email);
 
         if (Objects.nonNull(req.getEmail())) {
             user.setEmail(req.getEmail());
         }
 
-        if (Objects.nonNull(req.getPassword())) {
-            user.setPassword(req.getPassword());
+        if (Objects.nonNull(req.getPassword()) && req.getPassword() != "") {
+            user.setPassword(passwordEncoder.encode(req.getPassword()));
         }
 
         if (Objects.nonNull(req.getName())) {
@@ -115,4 +97,12 @@ public class UserServiceimplementation implements UserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public UserDto getCurrentUser(String email) {
+        UserEntity user = userRepository.findByEmail(email);
+        System.out.println("di service " + user.getPassword());
+        return UserDto.builder().email(user.getEmail()).name(user.getName()).password(user.getPassword()).build();
+    }
+
 }
