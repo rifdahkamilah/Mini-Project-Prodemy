@@ -4,18 +4,14 @@ import java.util.*;
 
 import java.util.stream.Collectors;
 
-import com.prodemy.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.prodemy.entity.Role;
 import org.springframework.security.core.userdetails.User;
@@ -24,13 +20,12 @@ import com.prodemy.model.RequestEditUser;
 import com.prodemy.model.UserDto;
 import com.prodemy.repository.RoleRepository;
 import com.prodemy.repository.UserRepository;
-import com.prodemy.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class UserServiceimplementation implements UserService {
+public class UserServiceImplementation implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;

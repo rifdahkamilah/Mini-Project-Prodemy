@@ -1,23 +1,66 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Edit Profile</title>
-  </head>
-  <body>
-    <h1>Edit Profile</h1>
-    <form th:action="@{/edit-profile}" method="post" th:object="${user}">
-      <div class="form-group">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" th:field="*{name}" readonly />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit Profile</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<form th:action="@{/edit-profile}" th:method="get" th:object="${user}">
+  <div class="flex flex-col justify-center items-center min-h-screen">
+    <div class="card w-96 bg-primary text-primary-content">
+      <div class="card-body">
+        <h2 class="card-title justify-center">Edit Profile</h2>
+
+        <div class="flex justify-center">
+          <div class="form-control w-full max-w-xs">
+            <label class="label">
+              <span class="label-text">What is your username?</span>
+            </label>
+            <input type="text" placeholder="Type your username here" name="username" class="input input-bordered w-full max-w-xs" th:field="*{name}" readonly />
+          </div>
+        </div>
+
+        <div class="flex justify-center">
+          <div class="form-control w-full max-w-xs justify-center">
+            <label class="label">
+              <span class="label-text">What is your email?</span>
+            </label>
+            <input type="email" placeholder="Type your email here" name="email" class="input input-bordered w-full max-w-xs" th:field="*{email}" readonly />
+          </div>
+        </div>
+        <div class="card-actions justify-center">
+          <a th:href="@{/users/edit/current}"<button class="btn">Edit Profile</button></a>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" th:field="*{email}" readonly />
-      </div>
-    </form>
-    <a th:href="@{/users/edit/current}">
-      <button>Edit Profile</button>
-    </a>
-  </body>
+    </div>
+  </div>
+</form>
+</body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+<!--  <head>-->
+<!--    <meta charset="UTF-8" />-->
+<!--    <title>Edit Profile</title>-->
+<!--  </head>-->
+<!--  <body>-->
+<!--    <h1>Edit Profile</h1>-->
+<!--    <form th:action="@{/edit-profile}" method="post" th:object="${user}">-->
+<!--      <div class="form-group">-->
+<!--        <label for="username">Username</label>-->
+<!--        <input type="text" id="username" name="username" th:field="*{name}" readonly />-->
+<!--      </div>-->
+<!--      <div class="form-group">-->
+<!--        <label for="email">Email</label>-->
+<!--        <input type="email" id="email" name="email" th:field="*{email}" readonly />-->
+<!--      </div>-->
+<!--    </form>-->
+<!--    <a th:href="@{/users/edit/current}">-->
+<!--      <button>Edit Profile</button>-->
+<!--    </a>-->
+<!--  </body>-->
+<!--</html>-->

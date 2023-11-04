@@ -27,41 +27,7 @@ public class Product {
     @Column(name = "PRODUCT_PRICE")
     private double productPrice;
 
-//    public Product(String productName, String productDescription, double productPrice) {
-//        this.productName = productName;
-//        this.productDescription = productDescription;
-//        this.productPrice = productPrice;
-//    }
+    @Column(name = "PRODUCT_IMAGE")
+    private String productImage;
 
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-//
-//    public String getProductName() {
-//        return productName;
-//    }
-//
-//    public void setProductName(String productName) {
-//        this.productName = productName;
-//    }
-//
-//    public String getProductDescription() {
-//        return productDescription;
-//    }
-//
-//    public void setProductDescription(String productDescription) {
-//        this.productDescription = productDescription;
-//    }
-//
-//    public double getProductPrice() {
-//        return productPrice;
-//    }
-//
-//    public void setProductPrice(double productPrice) {
-//        this.productPrice = productPrice;
-//    }
 }

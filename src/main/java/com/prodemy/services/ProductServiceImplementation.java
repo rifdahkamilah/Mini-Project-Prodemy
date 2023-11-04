@@ -27,4 +27,12 @@ public class ProductServiceImplementation implements ProductService {
 
     }
 
+//    public List<Product> filterProductsByName(String productName) {
+//        return productRepository.findByProductNameContaining(productName);
+//    }
+
+    @Override
+    public List<Product> findByKeyword(String keyword) {
+        return productRepository.findByKeyword(keyword);
+    }
 }

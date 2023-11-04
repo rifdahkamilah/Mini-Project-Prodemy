@@ -1,29 +1,75 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
-    <title>Daftar Produk</title>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+
 </head>
-<body>
-<h1>Daftar Produk</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Gambar</th>
-        <th>Nama</th>
-        <th>Deskripsi</th>
-        <th>Harga</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-<!--        <td><img th:src="${product.imageUrl}" alt="Product Image" width="100" height="100" /></td>-->
-        <td th:text="${product.productName}">Product Name</td>
-        <td th:text="${product.productDescription}">Product Description</td>
-        <td th:text="${product.productPrice}">Product Price</td>
-        <td><button th:onclick="'addToCart(' + ${id} + ')'" type="button">Add to Cart</button></td>
-    </tr>
-    </tbody>
-</table>
+<body style="background-color: thistle; font-family: Cambria, sans-serif;">
+<div class="container my-2">
+    <h1 style="color: darkmagenta;" class="text-uppercase" align="center">List Product</h1>
+
+    <form th:action="@{/products}" method="get">
+        <input id="txtSearch" type="text" name="keyword" placeholder="Search your product name here" />
+        <button type="submit">Filter</button>
+    </form>
+
+    <table align="center" border="1" class="table table-light table-striped table-responsive-md">
+        <thead align="center">
+        <tr>
+            <th>Product Name</th>
+            <th>Product Image</th>
+            <th>Product Description</th>
+            <th>Product Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody align="center">
+        <tr th:each="product : ${products}">
+            <td th:text="${product.productName}"></td>
+            <td> <img th:src="${product.productImage}" alt="Product Image" /></td>
+<!--            <td th:src="@{'https://images.app.goo.gl/hn6rukdWpmtu863Q6'}" alt="Gambar Produk"></td>-->
+            <td th:text="${product.productDescription}"></td>
+            <td th:text="${product.productPrice}"></td>
+            <td> <button th:onclick="'addToCart(' + ${id} + ')'" type="button" class="btn btn-info"> Add To Cart </button> </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    <title>Daftar Produk</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Daftar Produk</h1>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Gambar</th>-->
+<!--        <th>Nama</th>-->
+<!--        <th>Deskripsi</th>-->
+<!--        <th>Harga</th>-->
+<!--        <th></th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="product : ${products}">-->
+<!--&lt;!&ndash;        <td><img th:src="${product.imageUrl}" alt="Product Image" width="100" height="100" /></td>&ndash;&gt;-->
+<!--        <td th:text="${product.productName}">Product Name</td>-->
+<!--        <td th:text="${product.productDescription}">Product Description</td>-->
+<!--        <td th:text="${product.productPrice}">Product Price</td>-->
+<!--        <td><button th:onclick="'addToCart(' + ${id} + ')'" type="button">Add to Cart</button></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
