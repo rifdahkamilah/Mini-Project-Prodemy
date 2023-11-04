@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <title>Daftar Produk</title>
-</head>
-<body>
-<h1>Daftar Produk</h1>
-<table>
-    <thead>
-    <tr>
-        <th>Gambar</th>
-        <th>Nama</th>
-        <th>Deskripsi</th>
-        <th>Harga</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-<!--        <td><img th:src="${product.imageUrl}" alt="Product Image" width="100" height="100" /></td>-->
-        <td th:text="${product.productName}">Product Name</td>
-        <td th:text="${product.productDescription}">Product Description</td>
-        <td th:text="${product.productPrice}">Product Price</td>
-        <td><button th:onclick="'addToCart(' + ${id} + ')'" type="button">Add to Cart</button></td>
-    </tr>
-    </tbody>
-</table>
-</body>
+  </head>
+  <body>
+    <h1>Daftar Produk</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Gambar</th>
+          <th>Nama</th>
+          <th>Deskripsi</th>
+          <th>Harga</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="product : ${products}">
+          <!--        <td><img th:src="${product.imageUrl}" alt="Product Image" width="100" height="100" /></td>-->
+          <td th:text="${product.productName}">Product Name</td>
+          <td th:text="${product.productDescription}">Product Description</td>
+          <td th:text="${product.productPrice}">Product Price</td>
+          <td><button th:onclick="'addToCart(' + ${id} + ')'" type="button">Add to Cart</button></td>
+        </tr>
+      </tbody>
+      <div sec:authorize="isAuthenticated()">
+        This content is only shown to authenticated users.
+      </div>
+      <div th:if="${role == 'ADMIN'}">
+        <button>edit</button>
+      </div>
+      <div th:if="${role == 'USER'}">
+        <button>user</button>
+      </div>
+    </table>
+  </body>
 </html>

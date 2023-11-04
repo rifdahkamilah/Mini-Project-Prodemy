@@ -4,18 +4,14 @@ import java.util.*;
 
 import java.util.stream.Collectors;
 
-import com.prodemy.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.prodemy.entity.Role;
 import org.springframework.security.core.userdetails.User;
@@ -24,7 +20,6 @@ import com.prodemy.model.RequestEditUser;
 import com.prodemy.model.UserDto;
 import com.prodemy.repository.RoleRepository;
 import com.prodemy.repository.UserRepository;
-import com.prodemy.repository.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,6 +73,7 @@ public class UserServiceimplementation implements UserService {
     }
 
     @Override
+    @Transactional
     public void editUser(String email, RequestEditUser req) {
         validator.validate(req);
 
@@ -86,10 +82,6 @@ public class UserServiceimplementation implements UserService {
         if (Objects.nonNull(req.getEmail())) {
             user.setEmail(req.getEmail());
         }
-
-        System.out.println("password request : " + req.getPassword());
-        System.out.println("apakah benar?");
-        System.out.println(req.getPassword() != "");
 
         if (req.getPassword() != "") {
             user.setPassword(passwordEncoder.encode(req.getPassword()));
@@ -105,7 +97,6 @@ public class UserServiceimplementation implements UserService {
     @Override
     public UserDto getCurrentUser(String email) {
         UserEntity user = userRepository.findByEmail(email);
-        System.out.println("di service " + user.getPassword());
         return UserDto.builder().email(user.getEmail()).name(user.getName()).password(user.getPassword()).build();
     }
 
