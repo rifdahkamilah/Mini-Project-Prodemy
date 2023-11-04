@@ -33,7 +33,7 @@ public class UserController {
         return "editprofile";
     }
 
-    @PatchMapping("/users/edit/current")
+    @PostMapping("/users/edit/current")
     public String editUserAccount(Authentication emailReq, @ModelAttribute("user") RequestEditUser requestModel) {
         userService.editUser(emailReq.getName(), requestModel);
         return "redirect:/users/view/current?success";
