@@ -5,10 +5,9 @@ import com.prodemy.repository.ProductRepository;
 import com.prodemy.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -52,6 +51,33 @@ public class ProductController {
         }
         System.out.print("keyword " + keyword);
         return "products"; //html file
+    }
+
+    // add products
+    @GetMapping("/")
+    public String showAddProductForm(Model model){
+        model.addAttribute("products", new Product());
+        return "addProduct";
+    }
+//    @PostMapping("/addProduct")
+//    public String saveProduct(@RequestParam("file") MultipartFile file @RequestParam("name") String productName), @RequestParam("price") double productPrice, @RequestParam("desc") String productDescription) {
+//        productService.saveProductToDB(file, productName, productDescription, productPrice);
+//        return "products";
+//    }
+
+    @PostMapping("/addProduct")
+    public String saveProduct(@ModelAttribute Product product) {
+        MultipartFile file = product.getFile();
+        String productName = product.getProductName();
+        String productDescription = product.getProductDescription();
+        double productPrice = product.getProductPrice();
+
+        productService.saveProductToDB(file, productName, productDescription, productPrice);
+        return "redirect:/products";
+    }
+
+
+
     }
 
 }
