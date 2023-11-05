@@ -9,26 +9,26 @@
 </head>
 <body>
 <form th:action="@{/edit-profile}" th:method="get" th:object="${user}">
-  <div class="flex flex-col justify-center items-center min-h-screen">
-    <div class="card w-96 bg-primary text-primary-content">
+  <div data-theme="aqua" class="flex flex-col justify-center items-center min-h-screen">
+    <div class="card w-96 bg-primary bg-white shadow text-black text-primary-content">
       <div class="card-body">
         <h2 class="card-title justify-center">Edit Profile</h2>
 
         <div class="flex justify-center">
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">What is your username?</span>
+              <span class="label-text text-black">Username</span>
             </label>
-            <input type="text" placeholder="Type your username here" name="username" class="input input-bordered w-full max-w-xs" th:field="*{name}" readonly />
+            <input type="text" placeholder="Type your username here" name="username" class="input input-bordered input-info w-full max-w-xs text-black bg-white" th:field="*{name}" readonly />
           </div>
         </div>
 
         <div class="flex justify-center">
           <div class="form-control w-full max-w-xs justify-center">
             <label class="label">
-              <span class="label-text">What is your email?</span>
+              <span class="label-text text-black">Email</span>
             </label>
-            <input type="email" placeholder="Type your email here" name="email" class="input input-bordered w-full max-w-xs" th:field="*{email}" readonly />
+            <input type="email" placeholder="Type your email here" name="email" class="input input-bordered input-info w-full max-w-xs text-black bg-white" th:field="*{email}" readonly />
           </div>
         </div>
         <div class="card-actions justify-center">

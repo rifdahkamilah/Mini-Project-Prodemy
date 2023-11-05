@@ -5,14 +5,11 @@ import com.prodemy.repository.ProductRepository;
 import com.prodemy.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/products")
+// @RequestMapping("/products")
 public class ProductController {
 
     @Autowired
@@ -20,64 +17,88 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-
-    @GetMapping
-    public String listProducts(Model model) {
-        List<Product> products = productRepository.findAll();
-        model.addAttribute("products", products);
-        return "products";
-    }
-
-    //filter by name
-//    @GetMapping("/products")
-//    public String listProducts(@RequestParam(name = "productName", required = false) String productName, Model model) {
-//        if (productName != null) {
-//            List<Product> filteredProducts = productService.filterProductsByName(productName);
-//            model.addAttribute("products", filteredProducts);
-//        } else {
-//            List<Product> allProducts = productService.getAllProducts();
-//            model.addAttribute("products", allProducts);
-//        }
-//        return "products";
-//    }
+    private String keyword;
 
     @GetMapping("/products")
-    public String getProducts(Model model, String keyword) {
-        if(keyword != null) {
-            model.addAttribute("products", productService.findByKeyword(keyword));
-        }
-        else {
-            model.addAttribute("products", productService.getAllProducts());
-        }
-        System.out.print("keyword " + keyword);
-        return "products"; //html file
+    public String listProducts(Model model) {
+        // List<Product> products = productRepository.findAll();
+        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // if (auth.getAuthorities().stream().anyMatch(a ->
+        // a.getAuthority().equals("ADMIN"))) {
+        // model.addAttribute("role", "ADMIN");
+        // } else {
+        // model.addAttribute("role", "USER");
+        // }
+        // model.addAttribute("products", products);
+        return this.getProductsByName(model, null);
     }
 
-    // add products
-    @GetMapping("/")
-    public String showAddProductForm(Model model){
-        model.addAttribute("products", new Product());
-        return "addProduct";
+    // filter by name
+    @GetMapping("/products/getByName")
+    public String getProductsByName(Model model, @RequestParam String keyword) {
+        this.keyword = keyword;
+        if (keyword != null) {
+            model.addAttribute("products", productService.findByKeyword(keyword));
+        } else {
+            model.addAttribute("products", productService.getAllProducts());
+        }
+        return "products"; // html file
     }
-//    @PostMapping("/addProduct")
-//    public String saveProduct(@RequestParam("file") MultipartFile file @RequestParam("name") String productName), @RequestParam("price") double productPrice, @RequestParam("desc") String productDescription) {
-//        productService.saveProductToDB(file, productName, productDescription, productPrice);
+
+    @GetMapping("/products/getByPriceRange")
+    public String getProductsByPriceRange(Model model, @RequestParam("minPrice") Long minPrice,
+            @RequestParam("maxPrice") Long maxPrice) {
+        System.out.println(this.keyword);
+        if (this.keyword != "" && minPrice >= 0 && maxPrice > 0) {
+            model.addAttribute("products",
+                    productService.findProductsByPriceRangeAndName(minPrice, maxPrice, this.keyword));
+        } else if (minPrice >= 0 && maxPrice > 0) {
+            model.addAttribute("products", productService.findProductByPriceRange(minPrice, maxPrice));
+        } else {
+            model.addAttribute("products", productService.getAllProducts());
+        }
+        return "products"; // html file
+    }
+
+    // pagination
+//    @GetMapping("/")
+//    public String viewHomePage(Model model) {
+//        return findPaginated(1, model);
+//    }
+//
+//    @GetMapping("/page/{pageNo}")
+//    public String findPaginated(@PathVariable (value = "pageNo") int pageNo, Model model) {
+//        int pageSize = 4;
+//
+//        Page<Product> page = productService.findPaginated(pageNo, pageSize);
+//        List<Product> listProduct = page.getContent();
+//
+//        model.addAttribute("currentPage", pageNo);
+//        model.addAttribute("totalPages", page.getTotalPages());
+//        model.addAttribute("totalItems", page.getTotalElements());
+//        model.addAttribute("listProduct", listProduct);
 //        return "products";
 //    }
 
-    @PostMapping("/addProduct")
-    public String saveProduct(@ModelAttribute Product product) {
-        MultipartFile file = product.getFile();
-        String productName = product.getProductName();
-        String productDescription = product.getProductDescription();
-        double productPrice = product.getProductPrice();
-
-        productService.saveProductToDB(file, productName, productDescription, productPrice);
-        return "redirect:/products";
+    // Product Section
+    @GetMapping("/showNewProductForm")
+    public String showNewProductForm(Model model){
+        Product product = new Product();
+        model.addAttribute("products", product);
+                return "new_product";
     }
 
-
-
+    @PostMapping("/saveProduct")
+    public String saveProduct(@ModelAttribute("products") Product product){
+        productService.saveProduct(product);
+        return "redirect:/";
     }
 
+    @GetMapping("/deleteProduct/{id}")
+    public String deleteProduct(@PathVariable(value = "id") long id) {
+        this.productService.deleteProductById(id);
+        return "redirect:/";
+    }
 }
+
+

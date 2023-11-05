@@ -73,6 +73,7 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
+    @Transactional
     public void editUser(String email, RequestEditUser req) {
         validator.validate(req);
 
@@ -81,10 +82,6 @@ public class UserServiceImplementation implements UserService {
         if (Objects.nonNull(req.getEmail())) {
             user.setEmail(req.getEmail());
         }
-
-        System.out.println("password request : " + req.getPassword());
-        System.out.println("apakah benar?");
-        System.out.println(req.getPassword() != "");
 
         if (req.getPassword() != "") {
             user.setPassword(passwordEncoder.encode(req.getPassword()));
@@ -100,7 +97,6 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto getCurrentUser(String email) {
         UserEntity user = userRepository.findByEmail(email);
-        System.out.println("di service " + user.getPassword());
         return UserDto.builder().email(user.getEmail()).name(user.getName()).password(user.getPassword()).build();
     }
 

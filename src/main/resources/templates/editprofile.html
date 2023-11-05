@@ -9,33 +9,33 @@
 </head>
 <body>
 <form th:action="@{/users/edit/current}" th:method="get" th:object="${user}">
-  <div class="flex flex-col justify-center items-center min-h-screen">
-    <div class="card w-96 bg-primary text-primary-content">
+  <div data-theme="aqua" class="flex flex-col justify-center items-center min-h-screen">
+    <div class="card w-96 bg-white shadow text-primary-content">
       <div class="card-body">
         <h2 class="card-title justify-center">Edit Profile</h2>
 
         <div class="flex justify-center">
           <div class="form-control w-full max-w-xs">
             <label class="label">
-              <span class="label-text">What is your username?</span>
+              <span class="label-text text-black">What is your username?</span>
             </label>
-            <input type="text" placeholder="Type your username here" name="username" class="input input-bordered w-full max-w-xs" th:field="*{name}" />
+            <input type="text" placeholder="Type your username here" name="username" class="input input-bordered input-info w-full max-w-xs bg-white" th:field="*{name}" />
           </div>
         </div>
 
         <div class="flex justify-center">
           <div class="form-control w-full max-w-xs justify-center">
             <label class="label">
-              <span class="label-text">What is your password?</span>
+              <span class="label-text text-black">What is your password?</span>
             </label>
-            <input type="password" placeholder="Type your password here" name="password" class="input input-bordered w-full max-w-xs" th:field="*{password}" />
+            <input type="password" placeholder="Type your password here" name="password" class="input input-bordered input-info w-full max-w-xs bg-white" th:field="*{password}" />
           </div>
         </div>
         <div class="card-actions justify-center">
-          <button class="btn">Save</button>
+          <button class="btn btn-success">Save</button>
         </div>
         <div class="card-actions justify-center">
-          <a th:href="@{/users/view/current}"><button class="btn">Cancel Edit</button></a>
+          <a th:href="@{/users/view/current}"><button class="btn btn-error">Cancel Edit</button></a>
         </div>
     </div>
   </div>

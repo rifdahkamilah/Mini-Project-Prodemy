@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Data</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body style="background-color: thistle; font-family: Cambria, sans-serif;">
+<div class="container" align="center">
+    <h1 style="color: darkmagenta;" class="fw-bold text-uppercase"> Add Product </h1>
+    <hr>
+<!--    <h2 style="color: rebeccapurple;">This form is used to save student dat</h2>-->
+<!--    <hr>-->
+<!--    <h3 style="color: mediumpurple;">Get started with your personal data</h3>-->
+<!--    <hr>-->
+
+    <form action="#" th:object="${products}" th:action="@{/saveProduct}" method="post" enctype="multipart/form-data">
+            <label for="name">Nama Produk</label>
+            <input type="text" id="name" name="name" th:field="*{productName}" class="form-control mb-4 col-4"/>
+
+            <label for="description">Deskripsi Produk</label>
+            <textarea id="description" name="description" th:field="*{productDescription}"></textarea>
+
+            <label for="price">Harga Produk</label>
+            <input type="number" id="price" name="price" th:field="*{productPrice}" class="form-control mb-4 col-4"/>
+
+            <label for="productImage">Gambar Produk</label>
+            <input type="file" id="productImage" name="productImage" th:field="*{productImage}" accept="image/*" class="form-control mb-4 col-4"/>
+
+            <button type="submit">Add</button>
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/}"> Back to List Product </a>
+
+</div>
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head>-->
+<!--    &lt;!&ndash; Atur tampilan sesuai kebutuhan &ndash;&gt;-->
+<!--</head>-->
+<!--<body>-->
+<!--<form th:object="${product}" th:action="@{/products/add}" method="post" enctype="multipart/form-data">-->
+<!--    <label for="name">Nama Produk</label>-->
+<!--    <input type="text" id="name" name="name" th:field="*{name}" />-->
+
+<!--    <label for="description">Deskripsi Produk</label>-->
+<!--    <textarea id="description" name="description" th:field="*{description}"></textarea>-->
+
+<!--    <label for="price">Harga Produk</label>-->
+<!--    <input type="number" id="price" name="price" th:field="*{price}" />-->
+
+<!--    <label for="productImage">Gambar Produk</label>-->
+<!--    <input type="file" id="productImage" name="productImage" th:field="*{productImage}" accept="image/*" />-->
+
+<!--    <button type="submit">Tambah</button>-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">-->
+<!--    <title>Document</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="#">-->
+<!--            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" width="auto" height="auto">-->
+<!--        </a>-->
+<!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupport">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+
+<!--        <div class="collapse navbar-collapse" id="navbarSupportContent">-->
+<!--            <ul class="navbar-nav mr-auto"></ul>-->
+<!--            <ul class="navbar-nav">-->
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" th:href="@{/products}" href="#">admin-home</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--<div class="container-fluid">-->
+<!--    <a th:href="@{/products/add}" style="..." class="btn btn-primary"> Add Product</a>-->
+<!--    <table class="table">-->
+<!--        <thead class="thead-light">-->
+<!--        <tr>-->
+<!--            <th scope="col">SN</th>-->
+<!--            <th scope="col">Product Name</th>-->
+<!--            <th scope="col">Category</th>-->
+<!--            <th scope="col">Product Preview</th>-->
+<!--            <th scope="col">Delete</th>-->
+<!--            <th scope="col">Update</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--    </table>-->
+
+<!--    <tbody>-->
+<!--    <tr th:each="product, iStat : ${products}}">-->
+<!--        <th scope="row" th:text="{iStat.index + 1}">1</th>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</div>-->
+
+<!--</body>-->
+<!--</html>-->

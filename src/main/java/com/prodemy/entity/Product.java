@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     @Column(name = "PRODUCT_NAME")
     private String productName;
@@ -25,9 +26,11 @@ public class Product {
     private String productDescription;
 
     @Column(name = "PRODUCT_PRICE")
-    private double productPrice;
+    private long productPrice;
 
     @Column(name = "PRODUCT_IMAGE")
     private String productImage;
+//    private String productImage;
+
 
 }
