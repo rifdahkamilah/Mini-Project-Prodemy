@@ -45,7 +45,7 @@
             <td th:text="${product.productDescription}"></td>
             <td th:text="${product.productPrice}"></td>
             <td> <button th:onclick="'addToCart(' + ${id} + ')'" class="btn btn-info"> Add To Cart </button> </td>
-            <td><a th:href="@{/deleteProduct/{id} (id=$(product.id})}" class="btn btn-danger"> Delete Product </a> </td>
+            <td><a th:href="@{/deleteProduct/{id}(id=${product.id})}" class="btn btn-danger"> Delete Product </a> </td>
           </tr>
           </tbody>
         </table>
