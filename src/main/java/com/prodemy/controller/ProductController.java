@@ -61,35 +61,36 @@ public class ProductController {
     }
 
     // pagination
-//    @GetMapping("/")
-//    public String viewHomePage(Model model) {
-//        return findPaginated(1, model);
-//    }
-//
-//    @GetMapping("/page/{pageNo}")
-//    public String findPaginated(@PathVariable (value = "pageNo") int pageNo, Model model) {
-//        int pageSize = 4;
-//
-//        Page<Product> page = productService.findPaginated(pageNo, pageSize);
-//        List<Product> listProduct = page.getContent();
-//
-//        model.addAttribute("currentPage", pageNo);
-//        model.addAttribute("totalPages", page.getTotalPages());
-//        model.addAttribute("totalItems", page.getTotalElements());
-//        model.addAttribute("listProduct", listProduct);
-//        return "products";
-//    }
+    // @GetMapping("/")
+    // public String viewHomePage(Model model) {
+    // return findPaginated(1, model);
+    // }
+    //
+    // @GetMapping("/page/{pageNo}")
+    // public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
+    // Model model) {
+    // int pageSize = 4;
+    //
+    // Page<Product> page = productService.findPaginated(pageNo, pageSize);
+    // List<Product> listProduct = page.getContent();
+    //
+    // model.addAttribute("currentPage", pageNo);
+    // model.addAttribute("totalPages", page.getTotalPages());
+    // model.addAttribute("totalItems", page.getTotalElements());
+    // model.addAttribute("listProduct", listProduct);
+    // return "products";
+    // }
 
     // Product Section
     @GetMapping("/showNewProductForm")
-    public String showNewProductForm(Model model){
+    public String showNewProductForm(Model model) {
         Product product = new Product();
         model.addAttribute("products", product);
-                return "new_product";
+        return "new_product";
     }
 
     @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("products") Product product){
+    public String saveProduct(@ModelAttribute("products") Product product) {
         productService.saveProduct(product);
         return "redirect:/";
     }
@@ -104,8 +105,6 @@ public class ProductController {
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable(value = "id") long id) {
         this.productService.deleteProductById(id);
-        return "redirect:/";
+        return "redirect:/products";
     }
 }
-
-
