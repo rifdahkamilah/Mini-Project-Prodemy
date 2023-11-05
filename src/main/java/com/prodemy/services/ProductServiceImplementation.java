@@ -29,10 +29,10 @@ public class ProductServiceImplementation implements ProductService {
         return productRepository.findAll();
     }
 
-    @Override
-    public Product getProductById(long id) {
-        return productRepository.findById(id).orElse(null);
-    }
+//    @Override
+//    public Product getProductById(long id) {
+//        return productRepository.findById(id).orElse(null);
+//    }
 
     @Override
     public void addToCart(long id) {
@@ -77,17 +77,17 @@ public class ProductServiceImplementation implements ProductService {
         this.productRepository.save(product);
     }
 
-//    @Override
-//    public Product getProductById(long id) {
-//        Optional<Product> optional = productRepository.findById(id);
-//        Product product = null;
-//        if(optional.isPresent()) {
-//            product = optional.get();
-//        } else {
-//            throw new RuntimeException("ID Product tidak dapat ditemukan :: " + id);
-//        }
-//        return product;
-//    }
+    @Override
+    public Product getProductById(long id) {
+        Optional<Product> optional = productRepository.findById(id);
+        Product product = null;
+        if(optional.isPresent()) {
+            product = optional.get();
+        } else {
+            throw new RuntimeException("ID Product tidak dapat ditemukan :: " + id);
+        }
+        return product;
+    }
 
     @Override
     public void deleteProductById(long id) {

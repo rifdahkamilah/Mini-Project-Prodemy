@@ -94,6 +94,13 @@ public class ProductController {
         return "redirect:/";
     }
 
+    @GetMapping("/showFormForEdit/{id}")
+    public String showFormForEdit(@PathVariable ( value = "id") long id, Model model) {
+        Product product = productService.getProductById(id);
+        model.addAttribute("products", product);
+        return "edit_product";
+    }
+
     @GetMapping("/deleteProduct/{id}")
     public String deleteProduct(@PathVariable(value = "id") long id) {
         this.productService.deleteProductById(id);
