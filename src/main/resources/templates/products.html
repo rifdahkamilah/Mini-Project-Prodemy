@@ -56,7 +56,7 @@
             <tbody align="center">
               <tr th:each="product : ${products}">
                 <td th:text="${product.productName}"></td>
-                <td> <img th:src="${product.productImage}" alt="Product Image" style="width: 100px; height: 100px;" />
+                <td> <img th:src="@{'/uploads/' + ${product.productImage}}" alt="Product Image" style="width: 100px; height: 100px;" />
                 </td>
                 <td th:text="${product.productDescription}"></td>
                 <td th:text="${product.productPrice}"></td>
