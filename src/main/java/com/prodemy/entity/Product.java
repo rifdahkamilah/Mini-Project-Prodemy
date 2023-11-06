@@ -1,10 +1,7 @@
 package com.prodemy.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -12,12 +9,13 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Data
 @Table(name = "products")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "PRODUCT_NAME")
     private String productName;
@@ -26,10 +24,8 @@ public class Product {
     private String productDescription;
 
     @Column(name = "PRODUCT_PRICE")
-    private long productPrice;
+    private Long productPrice;
 
     @Column(name = "PRODUCT_IMAGE", length = 256)
     private String productImage;
-    // private String productImage;
-
 }

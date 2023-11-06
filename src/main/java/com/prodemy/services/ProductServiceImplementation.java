@@ -3,16 +3,8 @@ package com.prodemy.services;
 import com.prodemy.entity.Product;
 import com.prodemy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,10 +64,10 @@ public class ProductServiceImplementation implements ProductService {
         return productRepository.findProductsByPriceRangeAndName(minPrice, maxPrice, name);
     }
 
-    @Override
-    public void saveProduct(Product product) {
-        this.productRepository.save(product);
-    }
+//    @Override
+//    public void saveProduct(Product product) {
+//        this.productRepository.save(product);
+//    }
 
     @Override
     public Product getProductById(long id) {
@@ -89,16 +81,21 @@ public class ProductServiceImplementation implements ProductService {
         return product;
     }
 
+//    @Override
+//    public void deleteProductById(long id) {
+//        this.productRepository.deleteById(id);
+//    }
+
     @Override
-    public void deleteProductById(long id) {
-        this.productRepository.deleteById(id);
+    public void addProduct(Product product) {
+        productRepository.save(product);
     }
 
-//    @Override
-//    public Page<Product> findPaginated(int pageNo, int pageSize) {
-//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-//        return this.productRepository.findAll(pageable);
-//    }
+    @Override
+    public void removeProductById(long id) {
+        productRepository.deleteById(id);
+    }
+
 
 
 }

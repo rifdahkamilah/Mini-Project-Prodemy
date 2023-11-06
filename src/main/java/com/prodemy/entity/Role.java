@@ -20,7 +20,7 @@ import lombok.Setter;
 public class Role {
 
     @Id
-    private long id;
+    private Long id;
 
     private String name;
 

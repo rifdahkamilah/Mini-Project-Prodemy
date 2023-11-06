@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDto {
+public class ProductDTO {
 
+//    private long id;
     private String productName;
-
     private String productDescription;
-
     private long productPrice;
-
-    // private String productImage;
+//    private String productImage;
 }
