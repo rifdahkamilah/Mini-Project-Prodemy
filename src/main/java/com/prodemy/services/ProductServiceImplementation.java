@@ -3,16 +3,8 @@ package com.prodemy.services;
 import com.prodemy.entity.Product;
 import com.prodemy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,10 +21,10 @@ public class ProductServiceImplementation implements ProductService {
         return productRepository.findAll();
     }
 
-    @Override
-    public Product getProductById(long id) {
-        return productRepository.findById(id).orElse(null);
-    }
+//    @Override
+//    public Product getProductById(long id) {
+//        return productRepository.findById(id).orElse(null);
+//    }
 
     @Override
     public void addToCart(long id) {
@@ -72,33 +64,38 @@ public class ProductServiceImplementation implements ProductService {
         return productRepository.findProductsByPriceRangeAndName(minPrice, maxPrice, name);
     }
 
-    @Override
-    public void saveProduct(Product product) {
-        this.productRepository.save(product);
-    }
-
 //    @Override
-//    public Product getProductById(long id) {
-//        Optional<Product> optional = productRepository.findById(id);
-//        Product product = null;
-//        if(optional.isPresent()) {
-//            product = optional.get();
-//        } else {
-//            throw new RuntimeException("ID Product tidak dapat ditemukan :: " + id);
-//        }
-//        return product;
+//    public void saveProduct(Product product) {
+//        this.productRepository.save(product);
 //    }
 
     @Override
-    public void deleteProductById(long id) {
-        this.productRepository.deleteById(id);
+    public Product getProductById(long id) {
+        Optional<Product> optional = productRepository.findById(id);
+        Product product = null;
+        if(optional.isPresent()) {
+            product = optional.get();
+        } else {
+            throw new RuntimeException("ID Product tidak dapat ditemukan :: " + id);
+        }
+        return product;
     }
 
 //    @Override
-//    public Page<Product> findPaginated(int pageNo, int pageSize) {
-//        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-//        return this.productRepository.findAll(pageable);
+//    public void deleteProductById(long id) {
+//        this.productRepository.deleteById(id);
 //    }
+
+    @Override
+    public void addProduct(Product product) {
+        productRepository.save(product);
+    }
+
+    @Override
+    public void removeProductById(long id) {
+        productRepository.deleteById(id);
+    }
+
 
 
 }

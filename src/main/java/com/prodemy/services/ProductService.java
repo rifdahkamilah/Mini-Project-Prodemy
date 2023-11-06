@@ -13,19 +13,18 @@ public interface ProductService {
 
     void addToCart(long id);
 
-    //filter by name
-
-//    List<Product> filterProductsByName(String productName);
-
     List<Product> findByKeyword(String keyword);
 
-//    List<Product> saveProductToDB(MultipartFile file, String productName, String productDescription, double productPrice);
-    public List<Product> findProductByPriceRange(long minPrice, long maxPrice);
-    public List<Product> findProductsByPriceRangeAndName(long minPrice, long maxPrice, String name);
+    List<Product> findProductByPriceRange(long minPrice, long maxPrice);
+    List<Product> findProductsByPriceRangeAndName(long minPrice, long maxPrice, String name);
 
-//    Page<Product> findPaginated(int pageNo, int pageSize);
+//    void saveProduct(Product product);
+//
+//    void deleteProductById(long id);
 
-    void saveProduct(Product product);
+    void addProduct(Product product);
 
-    void deleteProductById(long id);
+    void removeProductById(long id);
+
+
 }

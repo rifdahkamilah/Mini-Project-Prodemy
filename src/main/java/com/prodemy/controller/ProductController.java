@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-// @RequestMapping("/products")
 public class ProductController {
 
     public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
@@ -27,17 +26,8 @@ public class ProductController {
     private ProductService productService;
     private String keyword;
 
-    @GetMapping("/products")
+    @GetMapping("/products1")
     public String listProducts(Model model) {
-        // List<Product> products = productRepository.findAll();
-        // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // if (auth.getAuthorities().stream().anyMatch(a ->
-        // a.getAuthority().equals("ADMIN"))) {
-        // model.addAttribute("role", "ADMIN");
-        // } else {
-        // model.addAttribute("role", "USER");
-        // }
-        // model.addAttribute("products", products);
         return this.getProductsByName(model, null);
     }
 
@@ -80,52 +70,103 @@ public class ProductController {
         return "products"; // html file
     }
 
-    // pagination
-    // @GetMapping("/")
-    // public String viewHomePage(Model model) {
-    // return findPaginated(1, model);
+    // // Product Section
+    // @GetMapping("/showNewProductForm")
+    // public String showNewProductForm(Model model) {
+    // Product product = new Product();
+    // model.addAttribute("products", product);
+    // return "new_product";
     // }
     //
-    // @GetMapping("/page/{pageNo}")
-    // public String findPaginated(@PathVariable (value = "pageNo") int pageNo,
-    // Model model) {
-    // int pageSize = 4;
-    //
-    // Page<Product> page = productService.findPaginated(pageNo, pageSize);
-    // List<Product> listProduct = page.getContent();
-    //
-    // model.addAttribute("currentPage", pageNo);
-    // model.addAttribute("totalPages", page.getTotalPages());
-    // model.addAttribute("totalItems", page.getTotalElements());
-    // model.addAttribute("listProduct", listProduct);
-    // return "products";
-    // }
+    //// // add product
+    ////
+    //// @PostMapping("/saveProduct")
+    //// public String saveProduct(@ModelAttribute("products") ProductDTO product,
+    //// @RequestParam("productImage") MultipartFile file)
+    //// throws IOException {
+    //// StringBuilder fileNames = new StringBuilder();
+    //// fileNames.append(file.getOriginalFilename());
+    //// Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY,
+    //// file.getOriginalFilename());
+    //// Files.write(fileNameAndPath, file.getBytes());
+    //// System.out.println(file.getOriginalFilename());
+    ////
+    //// return "redirect:/showNewProductForm?success";
+    //// }
+    ////
+    //// @GetMapping("/showFormForEdit/{id}")
+    //// public String showFormForEdit(@PathVariable ( value = "id") long id, Model
+    // model) {
+    //// Product product = productService.getProductById(id);
+    //// model.addAttribute("products", product);
+    //// return "edit_product";
+    //// }
+    ////
+    //// @GetMapping("/deleteProduct/{id}")
+    //// public String deleteProduct(@PathVariable(value = "id") long id) {
+    //// this.productService.deleteProductById(id);
+    //// return "redirect:/products";
+    //// }
 
     // Product Section
-    @GetMapping("/showNewProductForm")
-    public String showNewProductForm(Model model) {
-        Product product = new Product();
-        model.addAttribute("products", product);
+    @GetMapping("/products")
+    public String products(Model model) {
+        model.addAttribute("products", productService.getAllProducts());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+            model.addAttribute("role", "ADMIN");
+        } else {
+            model.addAttribute("role", "USER");
+        }
+        return "products";
+    }
+
+    @GetMapping("/products/add")
+    public String productAddGet(Model model) {
+        model.addAttribute("products", new Product());
         return "new_product";
     }
 
-    @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("products") ProductDto product,
-            @RequestParam("productImage") MultipartFile file)
-            throws IOException {
-        StringBuilder fileNames = new StringBuilder();
-        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY,
-                file.getOriginalFilename());
-        fileNames.append(file.getOriginalFilename());
-        Files.write(fileNameAndPath, file.getBytes());
-        System.out.println(file.getOriginalFilename());
-        // productService.saveProduct(product);
-        return "redirect:/showNewProductForm?success";
+    @PostMapping("/products/add")
+    public String productAddPost(@ModelAttribute("products") ProductDto productDTO,
+            @RequestParam("productImage") MultipartFile file,
+            @RequestParam("imgName") String imgName) throws IOException {
+        Product product = new Product();
+        // product.setId();
+        product.setProductName(productDTO.getProductName());
+        product.setProductPrice(productDTO.getProductPrice());
+        product.setProductDescription(productDTO.getProductDescription());
+        String imageUUID;
+        if (!file.isEmpty()) {
+            imageUUID = file.getOriginalFilename();
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
+            Files.write(fileNameAndPath, file.getBytes());
+        } else {
+            imageUUID = imgName;
+        }
+        product.setProductImage(imageUUID);
+        productService.addProduct(product);
+        return "redirect:/products";
     }
 
-    @GetMapping("/deleteProduct/{id}")
-    public String deleteProduct(@PathVariable(value = "id") long id) {
-        this.productService.deleteProductById(id);
+    @GetMapping("/product/delete/{id}")
+    public String deleteProduct(@PathVariable long id) {
+        productService.removeProductById(id);
         return "redirect:/products";
+    }
+
+    @GetMapping("/product/update/{id}")
+    public String updateProductGet(@PathVariable long id, Model model) {
+        Product product = productService.getProductById(id);
+        ProductDto productDTO = new ProductDto();
+        // productDTO.setId(product.getId());
+        productDTO.setProductName(product.getProductName());
+        productDTO.setProductPrice(product.getProductPrice());
+        productDTO.setProductDescription(product.getProductDescription());
+        // productDTO.setProductImage(product.getProductImage());
+
+        model.addAttribute("productDTO", productDTO);
+
+        return "new_product";
     }
 }
