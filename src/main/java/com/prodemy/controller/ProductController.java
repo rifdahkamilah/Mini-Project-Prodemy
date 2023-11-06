@@ -1,19 +1,25 @@
 package com.prodemy.controller;
 
 import com.prodemy.entity.Product;
-import com.prodemy.repository.ProductRepository;
+import com.prodemy.model.ProductDto;
 import com.prodemy.services.ProductService;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 // @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    private ProductRepository productRepository;
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     @Autowired
     private ProductService productService;
@@ -90,9 +96,17 @@ public class ProductController {
     }
 
     @PostMapping("/saveProduct")
-    public String saveProduct(@ModelAttribute("products") Product product) {
-        productService.saveProduct(product);
-        return "redirect:/";
+    public String saveProduct(@ModelAttribute("products") ProductDto product,
+            @RequestParam("productImage") MultipartFile file)
+            throws IOException {
+        StringBuilder fileNames = new StringBuilder();
+        Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY,
+                file.getOriginalFilename());
+        fileNames.append(file.getOriginalFilename());
+        Files.write(fileNameAndPath, file.getBytes());
+        System.out.println(file.getOriginalFilename());
+        // productService.saveProduct(product);
+        return "redirect:/showNewProductForm?success";
     }
 
     @GetMapping("/deleteProduct/{id}")

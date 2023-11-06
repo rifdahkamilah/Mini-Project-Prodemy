@@ -28,9 +28,8 @@ public class Product {
     @Column(name = "PRODUCT_PRICE")
     private long productPrice;
 
-    @Column(name = "PRODUCT_IMAGE")
+    @Column(name = "PRODUCT_IMAGE", length = 256)
     private String productImage;
-//    private String productImage;
-
+    // private String productImage;
 
 }
