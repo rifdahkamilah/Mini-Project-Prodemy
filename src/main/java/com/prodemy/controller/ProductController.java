@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +44,12 @@ public class ProductController {
     // filter by name
     @GetMapping("/products/getByName")
     public String getProductsByName(Model model, @RequestParam String keyword) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+            model.addAttribute("role", "ADMIN");
+        } else {
+            model.addAttribute("role", "USER");
+        }
         this.keyword = keyword;
         if (keyword != null) {
             model.addAttribute("products", productService.findByKeyword(keyword));
@@ -54,6 +62,12 @@ public class ProductController {
     @GetMapping("/products/getByPriceRange")
     public String getProductsByPriceRange(Model model, @RequestParam("minPrice") Long minPrice,
             @RequestParam("maxPrice") Long maxPrice) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
+            model.addAttribute("role", "ADMIN");
+        } else {
+            model.addAttribute("role", "USER");
+        }
         System.out.println(this.keyword);
         if (this.keyword != "" && minPrice >= 0 && maxPrice > 0) {
             model.addAttribute("products",
