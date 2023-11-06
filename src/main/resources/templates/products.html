@@ -1,80 +1,98 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>List Product</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body style="font-family: Cambria, sans-serif; font-size: 20px;">
-<div data-theme="aqua">
-  <h1 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 50px;"> List Product </h1>
-  <a th:href = "@{/showNewProductForm}" class="btn btn-info btn-sm mb-3">Add Product</a>
-  <div class="flex justify-center">
-    <div class="flex-none gap-2">
-      <div class="form-control">
-        <form th:action="@{/products}" method="get">
-          <label for="keyword">Filter by name : </label>
-          <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch" type="text" name="keyword" placeholder="Search your product name here" />
-          <button class="btn btn-success">Filter</button>
-        </form>
+  <div data-theme="aqua" class="min-h-screen">
+    <h1 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 50px;"> List
+      Product </h1>
 
-        <form th:action="@{'/products/getByPriceRange'}" method="get">
-          <label for="keyword">Filter by price : </label>
-          <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch" type="text" name="minPrice" placeholder="Input your mininimal price" />
-          <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch" type="text" name="maxPrice" placeholder="Input your maximal price" />
-          <button class="btn btn-success">Filter</button>
-        </form>
+    <div class="flex justify-center">
+      <div class="flex-none gap-2">
+        <div class="form-control">
+          <form th:action="@{/products}" method="get">
+            <label for="keyword">Filter by name : </label>
+            <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch"
+              type="text" name="keyword" placeholder="Search your product name here" />
+            <button class="btn btn-success">Filter</button>
+          </form>
+
+          <div class="flex items-center justify-between">
+            <div>
+              <form th:action="@{'/products/getByPriceRange'}" method="get">
+                <label for="keyword">Filter by price : </label>
+                <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch"
+                  type="text" name="minPrice" placeholder="Input your mininimal price" />
+                <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch"
+                  type="text" name="maxPrice" placeholder="Input your maximal price" />
+                <button class="btn btn-success">Filter</button>
+              </form>
+            </div>
+            <div>
+              <a th:href="@{/showNewProductForm}" class="btn btn-info btn-sm mb-3">Add Product</a>
+            </div>
+          </div>
 
 
-        <table style="font-size: 20px; margin: 10px;" align="center" border="1" class="table bg-white shadow table-striped table-responsive-md text-black">
-          <thead style="font-size: 20px;" align="center" class="text-black">
-          <tr>
-            <th>Product Name</th>
-            <th>Product Image</th>
-            <th>Product Description</th>
-            <th>Product Price</th>
-            <th>Actions</th>
-          </tr>
-          </thead>
-          <tbody align="center">
-          <tr th:each="product : ${products}">
-            <td th:text="${product.productName}"></td>
-            <td> <img th:src="${product.productImage}" alt="Product Image" style="width: 100px; height: 100px;"/></td>
-            <td th:text="${product.productDescription}"></td>
-            <td th:text="${product.productPrice}"></td>
-            <td> <button th:onclick="'addToCart(' + ${id} + ')'" class="btn btn-info"> Add To Cart </button> </td>
-            <td><a th:href="@{/deleteProduct/{id}(id=${product.id})}" class="btn btn-danger"> Delete Product </a> </td>
-          </tr>
-          </tbody>
-        </table>
+          <table style="font-size: 20px; margin: 10px;" align="center" border="1"
+            class="table bg-white shadow table-striped table-responsive-md text-black">
+            <thead style="font-size: 20px;" align="center" class="text-black">
+              <tr>
+                <th>Product Name</th>
+                <th>Product Image</th>
+                <th>Product Description</th>
+                <th>Product Price</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody align="center">
+              <tr th:each="product : ${products}">
+                <td th:text="${product.productName}"></td>
+                <td> <img th:src="${product.productImage}" alt="Product Image" style="width: 100px; height: 100px;" />
+                </td>
+                <td th:text="${product.productDescription}"></td>
+                <td th:text="${product.productPrice}"></td>
+                <td> <button th:onclick="'addToCart(' + ${id} + ')'" class="btn btn-info"> Add To Cart </button> </td>
+                <td><a th:href="@{/deleteProduct/{id}(id=${product.id})}" class="btn btn-danger"> Delete Product </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
-<!--        <div th:if = "${totalPages > 1}">-->
-<!--          <div class = "row col-sm-10">-->
-<!--            <div class = "col-sm-2">-->
-<!--              Total Rows: [[${totalItems}]]-->
-<!--            </div>-->
+          <!--        <div th:if = "${totalPages > 1}">-->
+          <!--          <div class = "row col-sm-10">-->
+          <!--            <div class = "col-sm-2">-->
+          <!--              Total Rows: [[${totalItems}]]-->
+          <!--            </div>-->
 
-<!--            <div class = "col-sm-1">-->
-<!--				<span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
-<!--					<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>-->
-<!--					<span th:unless="${currentPage != i}">[[${i}]]</span>-->
-<!--				</span>-->
-<!--            </div>-->
-<!--            <div class = "col-sm-1">-->
-<!--              <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}"> Next </a>-->
-<!--              <span th:unless="${currentPage < totalPages}"> Next </span>-->
-<!--            </div>-->
+          <!--            <div class = "col-sm-1">-->
+          <!--				<span th:each="i: ${#numbers.sequence(1, totalPages)}">-->
+          <!--					<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}">[[${i}]]</a>-->
+          <!--					<span th:unless="${currentPage != i}">[[${i}]]</span>-->
+          <!--				</span>-->
+          <!--            </div>-->
+          <!--            <div class = "col-sm-1">-->
+          <!--              <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}"> Next </a>-->
+          <!--              <span th:unless="${currentPage < totalPages}"> Next </span>-->
+          <!--            </div>-->
 
-<!--            <div class="col-sm-1">-->
-<!--              <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}"> Last </a>-->
-<!--              <span th:unless="${currentPage < totalPages}"> Last </span>-->
-<!--            </div>-->
-<!--      </div>-->
+          <!--            <div class="col-sm-1">-->
+          <!--              <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}}"> Last </a>-->
+          <!--              <span th:unless="${currentPage < totalPages}"> Last </span>-->
+          <!--            </div>-->
+          <!--      </div>-->
+        </div>
+      </div>
     </div>
   </div>
-</div>
   </div>
-</div>
+
 </html>
