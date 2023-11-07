@@ -94,15 +94,14 @@
 
 <!--                            <td><a th:href="@{/users/viewproduct/{id}(id=${product.id})}" class="btn btn-danger btn-sm">Detail-->
 <!--                                Product </a></td>-->
-
-                            <div>
+                                <td><a th:href="@{/users/viewuser/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Detail
+                                    User </a></td>
                                 <td><a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Delete User
                                 </a>
                                 </td>
                                 <td><a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Update User
                                 </a>
                                 </td>
-                            </div>
 
                         </tr>
                         </tbody>

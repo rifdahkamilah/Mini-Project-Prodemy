@@ -4,8 +4,6 @@ import java.util.*;
 
 import java.util.stream.Collectors;
 
-import com.prodemy.repository.CartRepository;
-import com.prodemy.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -114,14 +112,13 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUsertById(long id) {
-        Optional<User> optional = userRepository.findById(id);
-        User user = null;
-        if (optional.isPresent()) {
-            user = optional.get();
-        } else {
-            throw new RuntimeException("ID User tidak dapat ditemukan :: " + id);
-        }
-        return user;
+        //        User user = new User();
+//        if (us.isPresent()) {
+//            user = optional.get();
+//        } else {
+//            throw new RuntimeException("ID User tidak dapat ditemukan :: " + id);
+//        }
+        return userRepository.findById(id).orElse(null);
     }
 
 

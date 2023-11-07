@@ -40,35 +40,57 @@ public class AdminController {
         return "adminHome";
     }
 
-    @GetMapping("/admin/users")
+    @GetMapping("/users")
     public String getUser(Model model) {
         model.addAttribute("users", userService.getAllUsers());
         return "users";
     }
 
-    @GetMapping("/admin/users/add")
+    @GetMapping("/users/add")
     public String getUserAdd(Model model) {
         model.addAttribute("user", new User());
         return "new_user";
     }
 
-    @PostMapping("/admin/users/add")
+    @PostMapping("/users/add")
     public String postUserAdd(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/admin/users/delete/{id}")
+    @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable int id) {
         userService.removeUserById(id);
         return "redirect:/admin/users";
     }
 
-    @GetMapping("/admin/users/update/{id}")
+    @GetMapping("/users/update/{id}")
     public String updateUser(@PathVariable ( value = "id") long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "new_user";
+    }
+
+    @GetMapping({ "/users/viewuser/{id}" })
+    public String viewProduct(Model model, @PathVariable (value = "id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        User user = userService.getUserById(id);
+        if (user != null){
+            model.addAttribute("user", user);
+            System.out.println("YAY");
+        }
+        else
+        {
+            model.addAttribute("user", new User());
+            System.out.println("Bag of d**ks");
+        }
+//
+//
+//        model.addAttribute("user", new User());
+//        model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        return "view_user";
     }
 
 //    @GetMapping("/admin/users/update/{id}")

@@ -36,13 +36,13 @@ public class ProductController {
 
     private String keyword;
 
-    @GetMapping("/admin/products")
+    @GetMapping("/products")
     public String listProducts(Model model) {
         return this.getProductsByName(model, null);
     }
 
     // filter by name
-    @GetMapping("/admin/products/getByName")
+    @GetMapping("/products/getByName")
     public String getProductsByName(Model model, @RequestParam String keyword) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
@@ -149,7 +149,7 @@ public class ProductController {
     // return "products";
     // }
 
-    @GetMapping("/admin/products/add")
+    @GetMapping("/products/add")
     public String productAddGet(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
@@ -158,7 +158,7 @@ public class ProductController {
         return "new_product";
     }
 
-    @PostMapping("/admin/products/add")
+    @PostMapping("/products/add")
     public String productAddPost(@ModelAttribute("products") ProductDto productDTO,
             @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
             throws IOException {
@@ -180,13 +180,13 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/admin/product/delete/{id}")
+    @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable long id) {
         productService.removeProductById(id);
         return "redirect:/products";
     }
 
-    @GetMapping("/admin/product/update/{id}")
+    @GetMapping("/product/update/{id}")
     public String updateProductGet(@PathVariable long id, Model model) {
         Product product = productService.getProductById(id);
         ProductDto productDto = new ProductDto();
@@ -203,7 +203,7 @@ public class ProductController {
 
     // view detail product
 
-    @GetMapping({ "/admin/product/viewproduct/{id}" })
+    @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
