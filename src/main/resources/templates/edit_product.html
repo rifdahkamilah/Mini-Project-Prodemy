@@ -92,9 +92,9 @@
                     </div>
                     <p>Product Image</p>
                     <div class="custom-file">
-                      <input type="file" class="file-input w-full max-w-xs file-input-bordered" name="productImage" accept="image/jpeg, image/png" id="productImage" />
+                      <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{productImage}" name="productImage" accept="image/jpeg, image/png" id="productImage" />
                     </div>
-                    <input type="hidden" name="imgName" />
+                    <input type="hidden" name="imgName" th:value="${product.productImage}" />
                     <button type="submit" class="btn btn-ghost bg-green-100 mt-4 text-black">Submit</button>
                   </div>
                 </div>

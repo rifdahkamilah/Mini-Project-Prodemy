@@ -65,7 +65,7 @@
     <div class="flex justify-center px-20">
       <div class="flex gap-2 ">
         <div class="form-control">
-          <form th:action="@{/products/getByName}" method="get">
+          <form th:action="@{/admin/products/getByName}" method="get">
             <label for="keyword">Filter by name : </label>
             <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch"
               type="text" name="keyword" placeholder="Search your product name here" />
@@ -74,7 +74,7 @@
 
           <div class="flex items-center justify-between">
             <div>
-              <form th:action="@{'/products/getByPriceRange'}" method="get">
+              <form th:action="@{'/admin/products/getByPriceRange'}" method="get">
                 <label for="keyword">Filter by price : </label>
                 <input style="margin: 5px;" class="input input-bordered w-24 md:w-auto bg-white shadow" id="txtSearch"
                   type="text" name="minPrice" placeholder="Input your mininimal price" />
@@ -85,7 +85,7 @@
             </div>
             <div th:if="${role == 'ADMIN'}">
               <div>
-                <a th:href="@{/products/add}" class="btn btn-info btn-sm mb-3">Add Product</a>
+                <a th:href="@{/admin/products/add}" class="btn btn-info btn-sm mb-3">Add Product</a>
               </div>
             </div>
           </div>
@@ -95,7 +95,7 @@
               class="table bg-white shadow table-striped table-responsive-md text-black">
               <thead style="font-size: 20px;" align="center" class="text-black">
                 <tr>
-                  <th>Nomor</th>
+                  <th>Number</th>
                   <th>Product Name</th>
                   <th>Product Image</th>
                   <th>Product Description</th>

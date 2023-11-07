@@ -1,5 +1,7 @@
 package com.prodemy.controller;
 
+import com.prodemy.entity.Cart;
+//import com.prodemy.entity.PaymentMethod;
 import com.prodemy.entity.Product;
 import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
@@ -12,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -187,6 +190,10 @@ public class ProductController {
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
         model.addAttribute("cart", GlobalData.cart);
+
+//        List<Product> paymentMethods = productService.getAllPaymentMethods();
+//        model.addAttribute("paymentMethods", paymentMethods);
+
         return "cart";
     }
 
@@ -203,4 +210,16 @@ public class ProductController {
     // return "checkout";
     //
     // }
+
+    // payment methods
+//    @GetMapping("/cart")
+//    public String viewCart(Model model) {
+//        List<Product> paymentMethods = productService.getAllPaymentMethods();
+//        model.addAttribute("paymentMethods", paymentMethods);
+////
+////        List<Cart> carts = productService.getCartItems();
+////        model.addAttribute("cartItems", cartItems);
+//
+//        return "cart";
+
 }

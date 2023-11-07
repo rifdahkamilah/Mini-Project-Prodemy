@@ -1,5 +1,6 @@
 package com.prodemy.services;
 
+import com.prodemy.entity.Product;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,5 +16,15 @@ public interface UserService extends UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
     public void editUser(String email, RequestEditUser userDto);
     public UserDto getCurrentUser(String email);
+
+    List<User> getAllUsers();
+
+    User getUserById(long id);
+
+    User getUsertById(long id);
+
+    void addUser(User user);
+
+    void removeUserById(long id);
 
 }

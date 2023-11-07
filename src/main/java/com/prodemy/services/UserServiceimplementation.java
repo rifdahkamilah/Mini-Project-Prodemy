@@ -99,5 +99,37 @@ public class UserServiceImplementation implements UserService {
         return UserDto.builder().email(user.getEmail()).name(user.getName()).password(user.getPassword()).build();
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public User getUserById(long id) {
+        return null;
+    }
+
+
+    @Override
+    public User getUsertById(long id) {
+        //        User user = new User();
+//        if (us.isPresent()) {
+//            user = optional.get();
+//        } else {
+//            throw new RuntimeException("ID User tidak dapat ditemukan :: " + id);
+//        }
+        return userRepository.findById(id).orElse(null);
+    }
+
+
+    @Override
+    public void addUser(User user) {
+        userRepository.save(user);
+    }
+
+    @Override
+    public void removeUserById(long id) {
+        userRepository.deleteById(id);
+    }
 
 }

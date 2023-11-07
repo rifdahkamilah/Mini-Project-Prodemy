@@ -128,4 +128,9 @@ public class ProductServiceImplementation implements ProductService {
     public void editProduct(Product product) {
         productRepository.save(product);
     }
+//    @Override
+//    public List<Product> getAllPaymentMethods() {
+//        return productRepository.findAll();
+//    }
+
 }
