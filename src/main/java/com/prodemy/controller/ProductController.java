@@ -1,6 +1,7 @@
 package com.prodemy.controller;
 
 import com.prodemy.entity.Product;
+import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
 import com.prodemy.services.ProductService;
 
@@ -158,14 +159,14 @@ public class ProductController {
     @GetMapping("/product/update/{id}")
     public String updateProductGet(@PathVariable long id, Model model) {
         Product product = productService.getProductById(id);
-        ProductDto productDTO = new ProductDto();
-        // productDTO.setId(product.getId());
-        productDTO.setProductName(product.getProductName());
-        productDTO.setProductPrice(product.getProductPrice());
-        productDTO.setProductDescription(product.getProductDescription());
-        // productDTO.setProductImage(product.getProductImage());
+        ProductDto productDto = new ProductDto();
+//        productDto.setId(product.getId());
+        productDto.setProductName(product.getProductName());
+        productDto.setProductPrice(product.getProductPrice());
+        productDto.setProductDescription(product.getProductDescription());
+//        productDto.setProductImage(product.getProductImage());
 
-        model.addAttribute("productDTO", productDTO);
+        model.addAttribute("productDTO", productDto);
 
         return "new_product";
     }
@@ -173,8 +174,36 @@ public class ProductController {
     // view detail product
 
     @GetMapping({"/product/viewproduct/{id}"})
-    public String viewProduct(Model model, @PathVariable int id) {
-        model.addAttribute("products", productService.getProductById(id));
+    public  String viewProduct(Model model, @PathVariable int id) {
+        model.addAttribute("product", productService.getProductById(id));
         return "view_product";
     }
+
+    // add to cart
+    @GetMapping("/addToCart/{id}")
+    public String addToCart(@PathVariable int id) {
+        GlobalData.cart.add(productService.getProductById(id));
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/cart")
+    public String cartGet(Model model) {
+        model.addAttribute("cartCount", GlobalData.cart.size());
+        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
+        model.addAttribute("cart", GlobalData.cart);
+        return "cart";
+    }
+
+    @GetMapping("cart/removeItem/{id}")
+    public String cartItemRemove(@PathVariable int id) {
+        GlobalData.cart.remove(id);
+        return "redirect:/cart";
+    }
+
+//    @GetMapping("/checkout")
+//    public String checkout(Model model) {
+//        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
+//        return "checkout";
+//
+//    }
 }

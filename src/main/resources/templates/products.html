@@ -65,11 +65,11 @@
                 <td> <button th:onclick="'addToCart(' + ${id} + ')'" class="btn btn-info"> Add To Cart </button> </td>
 
                 <div th:if="${role == 'USER'}">
-                  <td><a th:href="@{/product/view/{id}(id=${product.id})}" class="btn btn-danger"> View Detail Product </a></td>
+                  <td><a th:href="@{/product/viewproduct/{id}(id=${product.id})}" class="btn btn-danger"> View Detail Product </a></td>
                 </div>
 
                 <div th:if="${role == 'ADMIN'}">
-                  <td><a th:href="@{/product/view/{id}(id=${product.id})}" class="btn btn-danger"> View Detail Product </a></td>
+                  <td><a th:href="@{/product/viewproduct/{id}(id=${product.id})}" class="btn btn-danger"> View Detail Product </a></td>
                   <td><a th:href="@{/product/delete/{id}(id=${product.id})}" class="btn btn-danger"> Delete Product </a></td>
                   <td><a th:href="@{/product/update/{id}(id=${product.id})}" class="btn btn-danger"> Update Product </a></td>
                 </div>

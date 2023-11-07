@@ -1,71 +1,78 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
-          integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <title>Document</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body style="font-family: Cambria, sans-serif; font-size: 20px;">
+<div data-theme="aqua" class="min-h-screen">
+    <div class="flex justify-center">
+        <div class="flex-none gap-2">
+            <div class="form-control">
+                <div class="container">
+                    <h3 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 30px;"> View Detail Product </h3>
     <form th:action="@{/product/viewproduct/{id}}" method="get" th:object="${products}">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
+<!--<nav class="navbar navbar-expand-lg navbar-light bg-light">-->
+<!--    <div class="container-fluid">-->
 <!--        <a class="navbar-brand" href="#">-->
 <!--            <img th:src="@{/images/logo.png}" src="../static/images/logo.png" width="auto" height="40"-->
 <!--                 class="d-inline-block align-top" alt=""/>-->
 <!--        </a>-->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<!--        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"-->
+<!--                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<!--        <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
 
-            <ul class="navbar-nav mr-auto"></ul>
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}" href="#">home</a>
-                </li>
+<!--            <ul class="navbar-nav mr-auto"></ul>-->
+<!--            <ul class="navbar-nav">-->
 <!--                <li class="nav-item active">-->
-<!--                    <a class="nav-link" th:href="@{/shop}" href="#">shop</a>-->
+<!--                    <a class="nav-link" th:href="@{/}" href="#">home</a>-->
 <!--                </li>-->
-                <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">logout</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/cart}" href="#">cart</a>
-                </li>
-                <li class="nav-item active">
-                    <span class="nav-link" th:text="${cartCount}"></span>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" th:href="@{/products}" href="#">shop</a>-->
+<!--                </li>-->
+<!--&lt;!&ndash;                <li class="nav-item active">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link" th:href="@{/shop}" href="#">shop</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item active">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/login}" href="#">login</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--&lt;!&ndash;                <li class="nav-item active">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}" href="#">logout</a>&ndash;&gt;-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" th:href="@{/cart}" href="#">cart</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item active">-->
+<!--                    <span class="nav-link" th:text="${cartCount}"></span>-->
+<!--&lt;!&ndash;                </li>&ndash;&gt;-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+
 <div class="container mt-5">
     <div class="row">
         <div class="col-sm-5 d-flex justify-content-center">
             <img class="mt-5" height="300px" width="300px" src="" th:src="@{${'/uploads/' + product.productImage}}"
                  alt="">
         </div>
-        <div class="col-sm-7 mt-5">
-            <h2 th:text="${product.productName}"></h2>
-<!--            <p th:text="${product.category.name}"></p>-->
-            <h2>₹ <span th:text="${product.productPrice}"></span></h2>
-<!--            <h5>Weight:-->
-<!--                <spna th:text="${product.weight}"></spna> grams.-->
-<!--            </h5>-->
-            <p th:text="${product.productDescription}"></p>
-            <a href="" th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary">Add to cart</a>
+
+        <div class="col-sm-7 mt-5 justify-center">
+            <label class="text-white-center">Product Name</label>
+            <h2 class="card bg-white shadow text-black rounded-box place-items-center" th:text="${product.productName}"></h2>
+            <label class="text-white-center">Product Price</label>
+            <h2 class="card bg-white shadow text-black rounded-box place-items-center"> Rp <span th:text="${product.productPrice}"></span></h2>
+            <label class="text-white-center">Product Description</label>
+            <p class="card bg-white shadow text-black rounded-box place-items-center" th:text="${product.productDescription}"></p>
+            <a style="justify-center;" href="" th:href="@{/addToCart/{id}(id = ${product.id})}" class="btn btn-primary">Add to cart</a>
         </div>
     </div>
 </div>

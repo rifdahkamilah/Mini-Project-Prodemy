@@ -5,7 +5,6 @@ import java.util.Collection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,6 +25,6 @@ public class Role {
     private String name;
 
     @ManyToMany(mappedBy = "roles")
-    Collection<UserEntity> users;
+    Collection<User> users;
 
 }
