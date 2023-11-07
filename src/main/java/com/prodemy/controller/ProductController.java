@@ -1,6 +1,7 @@
 package com.prodemy.controller;
 
 import com.prodemy.entity.Product;
+import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
 import com.prodemy.services.ProductService;
 
@@ -20,13 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ProductController {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/demo/src/main/resources/static/uploads";
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     @Autowired
     private ProductService productService;
     private String keyword;
 
-    @GetMapping("/products1")
+    @GetMapping("/products")
     public String listProducts(Model model) {
         return this.getProductsByName(model, null);
     }
@@ -50,16 +51,24 @@ public class ProductController {
     }
 
     @GetMapping("/products/getByPriceRange")
-    public String getProductsByPriceRange(Model model, @RequestParam("minPrice") Long minPrice,
-            @RequestParam("maxPrice") Long maxPrice) {
+    public String getProductsByPriceRange(Model model, @RequestParam("minPrice") String minPriceInput,
+            @RequestParam("maxPrice") String maxPriceInput) {
+        long maxPrice = 0;
+        long minPrice = 0;
+        if (minPriceInput != "" && maxPriceInput != "") {
+            maxPrice = (long) Integer.parseInt(maxPriceInput);
+            minPrice = (long) Integer.parseInt(minPriceInput);
+        }
+
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             model.addAttribute("role", "ADMIN");
         } else {
             model.addAttribute("role", "USER");
         }
+
         System.out.println(this.keyword);
-        if (this.keyword != "" && minPrice >= 0 && maxPrice > 0) {
+        if (this.keyword != null && minPrice >= 0 && maxPrice > 0) {
             model.addAttribute("products",
                     productService.findProductsByPriceRangeAndName(minPrice, maxPrice, this.keyword));
         } else if (minPrice >= 0 && maxPrice > 0) {
@@ -109,17 +118,18 @@ public class ProductController {
     //// }
 
     // Product Section
-    @GetMapping("/products")
-    public String products(Model model) {
-        model.addAttribute("products", productService.getAllProducts());
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
-            model.addAttribute("role", "ADMIN");
-        } else {
-            model.addAttribute("role", "USER");
-        }
-        return "products";
-    }
+    // @GetMapping("/products")
+    // public String products(Model model) {
+    // model.addAttribute("products", productService.getAllProducts());
+    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    // if (auth.getAuthorities().stream().anyMatch(a ->
+    // a.getAuthority().equals("ADMIN"))) {
+    // model.addAttribute("role", "ADMIN");
+    // } else {
+    // model.addAttribute("role", "USER");
+    // }
+    // return "products";
+    // }
 
     @GetMapping("/products/add")
     public String productAddGet(Model model) {
@@ -158,14 +168,14 @@ public class ProductController {
     @GetMapping("/product/update/{id}")
     public String updateProductGet(@PathVariable long id, Model model) {
         Product product = productService.getProductById(id);
-        ProductDto productDTO = new ProductDto();
-        // productDTO.setId(product.getId());
-        productDTO.setProductName(product.getProductName());
-        productDTO.setProductPrice(product.getProductPrice());
-        productDTO.setProductDescription(product.getProductDescription());
-        // productDTO.setProductImage(product.getProductImage());
+        ProductDto productDto = new ProductDto();
+        // productDto.setId(product.getId());
+        productDto.setProductName(product.getProductName());
+        productDto.setProductPrice(product.getProductPrice());
+        productDto.setProductDescription(product.getProductDescription());
+        // productDto.setProductImage(product.getProductImage());
 
-        model.addAttribute("productDTO", productDTO);
+        model.addAttribute("productDTO", productDto);
 
         return "new_product";
     }
@@ -174,7 +184,37 @@ public class ProductController {
 
     @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
-        model.addAttribute("products", productService.getProductById(id));
+        model.addAttribute("product", productService.getProductById(id));
         return "view_product";
     }
+
+    // add to cart
+    @GetMapping("/addToCart/{id}")
+    public String addToCart(@PathVariable("id") int id, Authentication userReq) {
+        productService.addToCart(id, userReq.getName());
+        
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/cart")
+    public String cartGet(Model model) {
+        model.addAttribute("cartCount", GlobalData.cart.size());
+        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
+        model.addAttribute("cart", GlobalData.cart);
+        return "cart";
+    }
+
+    @GetMapping("cart/removeItem/{id}")
+    public String cartItemRemove(@PathVariable int id) {
+        GlobalData.cart.remove(id);
+        return "redirect:/cart";
+    }
+
+    // @GetMapping("/checkout")
+    // public String checkout(Model model) {
+    // model.addAttribute("total",
+    // GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
+    // return "checkout";
+    //
+    // }
 }

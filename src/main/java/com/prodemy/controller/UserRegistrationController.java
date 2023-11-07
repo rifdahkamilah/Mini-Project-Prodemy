@@ -1,18 +1,12 @@
 package com.prodemy.controller;
 
-import com.prodemy.entity.UserEntity;
 import com.prodemy.model.UserDto;
 import com.prodemy.services.UserService;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 

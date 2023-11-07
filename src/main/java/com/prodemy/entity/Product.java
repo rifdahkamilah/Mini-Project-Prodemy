@@ -2,6 +2,9 @@ package com.prodemy.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
+
 import org.springframework.web.multipart.MultipartFile;
 
 @Getter
@@ -28,4 +31,8 @@ public class Product {
 
     @Column(name = "PRODUCT_IMAGE", length = 256)
     private String productImage;
+
+    @OneToMany(mappedBy = "products", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    private Set<Cart> carts;
 }
