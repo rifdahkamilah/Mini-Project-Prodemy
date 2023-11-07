@@ -148,14 +148,17 @@ public class ProductController {
 
     @GetMapping("/products/add")
     public String productAddGet(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        model.addAttribute("nameCurrentUser", currentUser.getName());
         model.addAttribute("products", new Product());
         return "new_product";
     }
 
     @PostMapping("/products/add")
     public String productAddPost(@ModelAttribute("products") ProductDto productDTO,
-            @RequestParam("productImage") MultipartFile file,
-            @RequestParam("imgName") String imgName) throws IOException {
+            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
+            throws IOException {
         Product product = new Product();
         // product.setId();
         product.setProductName(productDTO.getProductName());
@@ -167,7 +170,7 @@ public class ProductController {
             Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
             Files.write(fileNameAndPath, file.getBytes());
         } else {
-            imageUUID = imgName;
+            imageUUID = nameImage;
         }
         product.setProductImage(imageUUID);
         productService.addProduct(product);
@@ -199,7 +202,10 @@ public class ProductController {
 
     @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
         model.addAttribute("product", productService.getProductById(id));
+        model.addAttribute("nameCurrentUser", currentUser.getName());
         return "view_product";
     }
 
