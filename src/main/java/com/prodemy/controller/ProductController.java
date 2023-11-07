@@ -1,5 +1,7 @@
 package com.prodemy.controller;
 
+import com.prodemy.entity.Cart;
+//import com.prodemy.entity.PaymentMethod;
 import com.prodemy.entity.Product;
 import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
@@ -11,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -33,13 +36,13 @@ public class ProductController {
 
     private String keyword;
 
-    @GetMapping("/products")
+    @GetMapping("/admin/products")
     public String listProducts(Model model) {
         return this.getProductsByName(model, null);
     }
 
     // filter by name
-    @GetMapping("/products/getByName")
+    @GetMapping("/admin/products/getByName")
     public String getProductsByName(Model model, @RequestParam String keyword) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
@@ -146,13 +149,13 @@ public class ProductController {
     // return "products";
     // }
 
-    @GetMapping("/products/add")
+    @GetMapping("/admin/products/add")
     public String productAddGet(Model model) {
         model.addAttribute("products", new Product());
         return "new_product";
     }
 
-    @PostMapping("/products/add")
+    @PostMapping("/admin/products/add")
     public String productAddPost(@ModelAttribute("products") ProductDto productDTO,
             @RequestParam("productImage") MultipartFile file,
             @RequestParam("imgName") String imgName) throws IOException {
@@ -174,13 +177,13 @@ public class ProductController {
         return "redirect:/products";
     }
 
-    @GetMapping("/product/delete/{id}")
+    @GetMapping("/admin/product/delete/{id}")
     public String deleteProduct(@PathVariable long id) {
         productService.removeProductById(id);
         return "redirect:/products";
     }
 
-    @GetMapping("/product/update/{id}")
+    @GetMapping("/admin/product/update/{id}")
     public String updateProductGet(@PathVariable long id, Model model) {
         Product product = productService.getProductById(id);
         ProductDto productDto = new ProductDto();
@@ -197,7 +200,7 @@ public class ProductController {
 
     // view detail product
 
-    @GetMapping({ "/product/viewproduct/{id}" })
+    @GetMapping({ "/admin/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
         model.addAttribute("product", productService.getProductById(id));
         return "view_product";
@@ -216,6 +219,10 @@ public class ProductController {
         model.addAttribute("cartCount", GlobalData.cart.size());
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
         model.addAttribute("cart", GlobalData.cart);
+
+//        List<Product> paymentMethods = productService.getAllPaymentMethods();
+//        model.addAttribute("paymentMethods", paymentMethods);
+
         return "cart";
     }
 
@@ -232,4 +239,16 @@ public class ProductController {
     // return "checkout";
     //
     // }
+
+    // payment methods
+//    @GetMapping("/cart")
+//    public String viewCart(Model model) {
+//        List<Product> paymentMethods = productService.getAllPaymentMethods();
+//        model.addAttribute("paymentMethods", paymentMethods);
+////
+////        List<Cart> carts = productService.getCartItems();
+////        model.addAttribute("cartItems", cartItems);
+//
+//        return "cart";
+
 }

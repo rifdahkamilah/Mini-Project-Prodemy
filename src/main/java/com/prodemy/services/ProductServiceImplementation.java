@@ -115,4 +115,9 @@ public class ProductServiceImplementation implements ProductService {
         productRepository.deleteById(id);
     }
 
+//    @Override
+//    public List<Product> getAllPaymentMethods() {
+//        return productRepository.findAll();
+//    }
+
 }

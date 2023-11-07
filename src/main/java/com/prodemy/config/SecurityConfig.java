@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .requestMatchers("/registration**", "/js/**", "/css/**", "/img/**").permitAll()
                 .anyRequest().authenticated())
                 .formLogin((form) -> form
-                        .loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/products", true)
+                        .loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/admin", true)
                         .permitAll())
                 .logout((logout) -> logout.invalidateHttpSession(true).clearAuthentication(true)
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout")

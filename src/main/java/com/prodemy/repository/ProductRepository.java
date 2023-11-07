@@ -19,4 +19,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @Query(value = "SELECT * FROM Products p WHERE p.product_price BETWEEN :minPrice AND :maxPrice AND lower(p.product_name) LIKE lower(concat('%', :name, '%'))", nativeQuery = true)
     public List<Product> findProductsByPriceRangeAndName(double minPrice, double maxPrice, String name);
 
+//    public List<PaymentMethod> getAllPaymentMethods(long id, String name);
+
 }
