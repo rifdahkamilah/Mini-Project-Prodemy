@@ -172,7 +172,7 @@ public class ProductController {
 
     // view detail product
 
-    @GetMapping({"/product/viewproduct/{id}"})
+    @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
         model.addAttribute("products", productService.getProductById(id));
         return "view_product";
