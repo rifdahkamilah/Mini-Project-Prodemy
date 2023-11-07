@@ -3,7 +3,9 @@ package com.prodemy.controller;
 import com.prodemy.entity.Product;
 import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
+import com.prodemy.model.UserDto;
 import com.prodemy.services.ProductService;
+import com.prodemy.services.UserService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,6 +27,10 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private UserService userService;
+
     private String keyword;
 
     @GetMapping("/products")
@@ -36,12 +42,17 @@ public class ProductController {
     @GetMapping("/products/getByName")
     public String getProductsByName(Model model, @RequestParam String keyword) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        this.keyword = keyword;
+
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             model.addAttribute("role", "ADMIN");
         } else {
             model.addAttribute("role", "USER");
         }
-        this.keyword = keyword;
+
         if (keyword != null) {
             model.addAttribute("products", productService.findByKeyword(keyword));
         } else {
@@ -53,14 +64,18 @@ public class ProductController {
     @GetMapping("/products/getByPriceRange")
     public String getProductsByPriceRange(Model model, @RequestParam("minPrice") String minPriceInput,
             @RequestParam("maxPrice") String maxPriceInput) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
         long maxPrice = 0;
         long minPrice = 0;
+
         if (minPriceInput != "" && maxPriceInput != "") {
             maxPrice = (long) Integer.parseInt(maxPriceInput);
             minPrice = (long) Integer.parseInt(minPriceInput);
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             model.addAttribute("role", "ADMIN");
         } else {
@@ -192,7 +207,7 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") int id, Authentication userReq) {
         productService.addToCart(id, userReq.getName());
-        
+
         return "redirect:/cart";
     }
 
