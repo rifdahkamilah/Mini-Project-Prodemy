@@ -33,6 +33,6 @@ public class Product {
     private String productImage;
 
     @OneToMany(mappedBy = "products", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.MERGE)
     private Set<Cart> carts;
 }

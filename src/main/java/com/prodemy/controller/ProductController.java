@@ -3,6 +3,7 @@ package com.prodemy.controller;
 import com.prodemy.entity.Product;
 import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
+import com.prodemy.model.ProductEditRequest;
 import com.prodemy.model.UserDto;
 import com.prodemy.services.ProductService;
 import com.prodemy.services.UserService;
@@ -94,58 +95,6 @@ public class ProductController {
         return "products"; // html file
     }
 
-    // // Product Section
-    // @GetMapping("/showNewProductForm")
-    // public String showNewProductForm(Model model) {
-    // Product product = new Product();
-    // model.addAttribute("products", product);
-    // return "new_product";
-    // }
-    //
-    //// // add product
-    ////
-    //// @PostMapping("/saveProduct")
-    //// public String saveProduct(@ModelAttribute("products") ProductDTO product,
-    //// @RequestParam("productImage") MultipartFile file)
-    //// throws IOException {
-    //// StringBuilder fileNames = new StringBuilder();
-    //// fileNames.append(file.getOriginalFilename());
-    //// Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY,
-    //// file.getOriginalFilename());
-    //// Files.write(fileNameAndPath, file.getBytes());
-    //// System.out.println(file.getOriginalFilename());
-    ////
-    //// return "redirect:/showNewProductForm?success";
-    //// }
-    ////
-    //// @GetMapping("/showFormForEdit/{id}")
-    //// public String showFormForEdit(@PathVariable ( value = "id") long id, Model
-    // model) {
-    //// Product product = productService.getProductById(id);
-    //// model.addAttribute("products", product);
-    //// return "edit_product";
-    //// }
-    ////
-    //// @GetMapping("/deleteProduct/{id}")
-    //// public String deleteProduct(@PathVariable(value = "id") long id) {
-    //// this.productService.deleteProductById(id);
-    //// return "redirect:/products";
-    //// }
-
-    // Product Section
-    // @GetMapping("/products")
-    // public String products(Model model) {
-    // model.addAttribute("products", productService.getAllProducts());
-    // Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-    // if (auth.getAuthorities().stream().anyMatch(a ->
-    // a.getAuthority().equals("ADMIN"))) {
-    // model.addAttribute("role", "ADMIN");
-    // } else {
-    // model.addAttribute("role", "USER");
-    // }
-    // return "products";
-    // }
-
     @GetMapping("/products/add")
     public String productAddGet(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -185,17 +134,34 @@ public class ProductController {
 
     @GetMapping("/product/update/{id}")
     public String updateProductGet(@PathVariable long id, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto user = userService.getCurrentUser(auth.getName());
         Product product = productService.getProductById(id);
-        ProductDto productDto = new ProductDto();
-        // productDto.setId(product.getId());
-        productDto.setProductName(product.getProductName());
-        productDto.setProductPrice(product.getProductPrice());
-        productDto.setProductDescription(product.getProductDescription());
-        // productDto.setProductImage(product.getProductImage());
+        model.addAttribute("product", product);
+        model.addAttribute("nameCurrentUser", user.getName());
+        return "edit_product";
+    }
 
-        model.addAttribute("productDTO", productDto);
-
-        return "new_product";
+    @PostMapping("/product/update")
+    public String updateProductPost(@ModelAttribute("products") ProductEditRequest productReq,
+            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
+            throws IOException {
+        Product product = new Product();
+        product.setId(productReq.getId());
+        product.setProductName(productReq.getProductName());
+        product.setProductPrice(productReq.getProductPrice());
+        product.setProductDescription(productReq.getProductDescription());
+        String imageUUID;
+        if (!file.isEmpty()) {
+            imageUUID = file.getOriginalFilename();
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
+            Files.write(fileNameAndPath, file.getBytes());
+        } else {
+            imageUUID = nameImage;
+        }
+        product.setProductImage(imageUUID);
+        productService.addProduct(product);
+        return "redirect:/products";
     }
 
     // view detail product
@@ -213,7 +179,6 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") int id, Authentication userReq) {
         productService.addToCart(id, userReq.getName());
-
         return "redirect:/cart";
     }
 

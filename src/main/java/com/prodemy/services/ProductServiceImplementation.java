@@ -10,6 +10,7 @@ import com.prodemy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -112,7 +113,19 @@ public class ProductServiceImplementation implements ProductService {
 
     @Override
     public void removeProductById(long id) {
+        List<Cart> carts = cartRepository.getCartByProductId(id);
+        System.out.println("size : " + carts.size());
+
+        if (carts.size() > 0) {
+            for (int i = 0; i < carts.size(); i++) {
+                carts.get(i).setProducts(null);
+            }
+        }
         productRepository.deleteById(id);
     }
 
+    @Override
+    public void editProduct(Product product) {
+        productRepository.save(product);
+    }
 }
