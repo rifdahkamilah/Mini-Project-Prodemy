@@ -204,8 +204,14 @@ public class ProductController {
     }
 
     @GetMapping("/cart/addPaymentMethod/{method}")
-    public String addPayment(@PathVariable("method") String methodPayment){
-        //ambil productService.addPayment(methodPayment, id);
+    public String addPayment(@PathVariable("method") String paymentMethod, long id){
+        productService.addPayment(paymentMethod, id);
+        return "redirect:/history";
+    }
+
+    @GetMapping("/cart/addDeliveryMethod/{method}")
+    public String addDelivery(@PathVariable("method") String deliveryMethod, long id) {
+        productService.addDelivery(deliveryMethod, id);
         return "redirect:/history";
     }
 

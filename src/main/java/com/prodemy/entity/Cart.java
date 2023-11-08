@@ -18,7 +18,10 @@ public class Cart {
     private long id;
 
     @Nullable
-    private String metodePembayaran;
+    private String paymentMethod;
+
+    @Nullable
+    private String deliveryMethod;
     private String status;
 
     @ManyToOne

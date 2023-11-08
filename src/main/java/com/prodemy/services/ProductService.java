@@ -27,7 +27,9 @@ public interface ProductService {
 
     void removeProductById(long id);
 
-    public void addPayment(String methodPayment, long id);
+    public void addPayment(String paymentMethod, long id);
+
+    public void addDelivery(String deliveryMethod, long id);
 
 //    List<Product> getAllPaymentMethods();
 

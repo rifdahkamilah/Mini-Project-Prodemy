@@ -133,10 +133,16 @@ public class ProductServiceImplementation implements ProductService {
 //    }
 
     @Override
-    public void addPayment(String methodPayment, long id) {
+    public void addPayment(String paymentMethod, long id) {
         Cart cart = cartRepository.findById(id).orElse(null);
-        cart.setMetodePembayaran(methodPayment);
+        cart.setPaymentMethod(paymentMethod);
+        cartRepository.save(cart);
+    }
 
+    @Override
+    public void addDelivery(String deliveryMethod, long id) {
+        Cart cart = cartRepository.findById(id).orElse(null);
+        cart.setDeliveryMethod(deliveryMethod);
         cartRepository.save(cart);
     }
 
