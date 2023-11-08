@@ -1,5 +1,7 @@
 package com.prodemy.entity;
 
+import org.springframework.lang.Nullable;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,6 +17,8 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Nullable
+    private String metodePembayaran;
     private String status;
 
     @ManyToOne
@@ -24,5 +28,4 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User users;
-
 }

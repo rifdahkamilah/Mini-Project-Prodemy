@@ -10,7 +10,6 @@ import com.prodemy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -132,5 +131,13 @@ public class ProductServiceImplementation implements ProductService {
 //    public List<Product> getAllPaymentMethods() {
 //        return productRepository.findAll();
 //    }
+
+    @Override
+    public void addPayment(String methodPayment, long id) {
+        Cart cart = cartRepository.findById(id).orElse(null);
+        cart.setMetodePembayaran(methodPayment);
+
+        cartRepository.save(cart);
+    }
 
 }

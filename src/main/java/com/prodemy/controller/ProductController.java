@@ -197,10 +197,16 @@ public class ProductController {
         return "cart";
     }
 
-    @GetMapping("cart/removeItem/{id}")
+    @GetMapping("/cart/removeItem/{id}")
     public String cartItemRemove(@PathVariable int id) {
         GlobalData.cart.remove(id);
         return "redirect:/cart";
+    }
+
+    @GetMapping("/cart/addPaymentMethod/{method}")
+    public String addPayment(@PathVariable("method") String methodPayment){
+        //ambil productService.addPayment(methodPayment, id);
+        return "redirect:/history";
     }
 
     // @GetMapping("/checkout")

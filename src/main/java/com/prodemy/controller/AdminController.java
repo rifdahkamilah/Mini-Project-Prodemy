@@ -58,17 +58,10 @@ public class AdminController {
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable int id) {
         userService.removeUserById(id);
-        return "redirect:/admin/users";
+        return "redirect:/users";
     }
 
-    @GetMapping("/users/update/{id}")
-    public String updateUser(@PathVariable(value = "id") long id, Model model) {
-        User user = userService.getUserById(id);
-        model.addAttribute("user", user);
-        return "new_user";
-    }
-
-    @GetMapping({"/users/viewuser/{id}"})
+    @GetMapping({ "/users/viewuser/{id}" })
     public String viewProduct(Model model, @PathVariable(value = "id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
@@ -88,13 +81,14 @@ public class AdminController {
         return "view_user";
     }
 
-    // @GetMapping("/admin/users/update/{id}")
-    // public String updateUser(@PathVariable int id, Model model) {
-    // com.prodemy.entity.User user = userService.getUserById(id);
-    // if(user.isPresent()) {
-    // model.addAttribute("user", user.get());
-    // return "usersAdd";
-    // } else
-    // return "404";
-    // }
+    @GetMapping("/users/update/{id}")
+    public String updateUser(@PathVariable int id, Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+
+        User user = userService.getUserById(id);
+        model.addAttribute("user", user);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        return "update_user";
+    }
 }
