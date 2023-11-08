@@ -1,54 +1,61 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.3/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.3/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <div data-theme="aqua" class="flex flex-col justify-center items-center min-h-screen">
-      <div th:if="${param.logout}">
+</head>
+<body>
+<div data-theme="aqua" class="flex flex-col justify-center items-center min-h-screen">
+    <div th:if="${param.logout}">
         <div class="alert alert-success mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>You Success to Logout!</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 class="stroke-current shrink-0 w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>You Success to Logout!</span>
         </div>
-      </div>
+    </div>
 
-      <div th:if="${param.error}">
+    <div th:if="${param.error}">
         <div class="alert alert-error mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-          </svg>
-          <span>Invalid username and password</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                 class="stroke-current shrink-0 w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>Invalid username and password</span>
         </div>
-      </div>
-      <div class="card w-96 bg-white shadow-xl py-4">
+    </div>
+    <div class="card w-96 bg-white shadow-xl py-4">
         <h1 class="text-center text-3xl text-black font-bold">Login</h1>
         <div class="card-body">
-          <form method="POST" th:action="@{/login}">
-            <div class="flex flex-col text-black gap-4">
-              <!-- <input type="text" th:field="*{fullName}" hidden /> -->
-              <div class="flex flex-col">
-                <label for="username">Email</label>
-                <input type="email" name="username" id="username" class="rounded p-1 bg-white border-black border-2" />
-              </div>
-              <div class="flex flex-col">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" class="rounded p-1 bg-white border-black border-2" />
-                <p>New user? <a th:href="@{/registration}" class="text-primary hover:underline hover:text-blue-900">Sign in</a></p>
-              </div>
-              <div class="flex w-full justify-center">
-                <button class="btn btn-primary px-10">Login</button>
-              </div>
-            </div>
-          </form>
+            <form method="POST" th:action="@{/login}">
+                <div class="flex flex-col text-black gap-4">
+                    <!-- <input type="text" th:field="*{fullName}" hidden /> -->
+                    <div class="flex flex-col">
+                        <label for="username">Email</label>
+                        <input type="email" name="username" id="username"
+                               class="rounded p-1 bg-white border-black border-2"/>
+                    </div>
+                    <div class="flex flex-col">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password"
+                               class="rounded p-1 bg-white border-black border-2"/>
+                        <p>New user? <a th:href="@{/registration}"
+                                        class="text-primary hover:underline hover:text-blue-900">Sign in</a></p>
+                    </div>
+                    <div class="flex w-full justify-center">
+                        <button class="btn btn-primary px-10">Login</button>
+                    </div>
+                </div>
+            </form>
         </div>
-      </div>
     </div>
-  </body>
+</div>
+</body>
 </html>

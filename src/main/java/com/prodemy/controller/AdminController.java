@@ -20,7 +20,7 @@ public class AdminController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/admin")
+    @GetMapping("/")
     public String adminHome(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
@@ -59,7 +59,7 @@ public class AdminController {
     @GetMapping("/users/delete/{id}")
     public String deleteUser(@PathVariable int id) {
         userService.removeUserById(id);
-        return "redirect:/admin/users";
+        return "redirect:/users";
     }
 
     @GetMapping("/users/update/{id}")
