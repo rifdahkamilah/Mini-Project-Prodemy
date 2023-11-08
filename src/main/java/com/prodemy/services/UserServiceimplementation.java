@@ -106,12 +106,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserById(long id) {
-        return null;
-    }
-
-
-    @Override
-    public User getUsertById(long id) {
         //        User user = new User();
 //        if (us.isPresent()) {
 //            user = optional.get();

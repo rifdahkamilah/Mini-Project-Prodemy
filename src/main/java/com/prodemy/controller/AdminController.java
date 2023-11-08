@@ -65,23 +65,21 @@ public class AdminController {
     }
 
     @GetMapping("/users/update/{id}")
-    public String updateUser(@PathVariable ( value = "id") long id, Model model) {
+    public String updateUser(@PathVariable(value = "id") long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "new_user";
     }
 
-    @GetMapping({ "/users/viewuser/{id}" })
-    public String viewProduct(Model model, @PathVariable (value = "id") long id) {
+    @GetMapping({"/users/viewuser/{id}"})
+    public String viewProduct(Model model, @PathVariable(value = "id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         User user = userService.getUserById(id);
-        if (user != null){
+        if (user != null) {
             model.addAttribute("user", user);
             System.out.println("YAY");
-        }
-        else
-        {
+        } else {
             model.addAttribute("user", new User());
             System.out.println("Bag of d**ks");
         }
