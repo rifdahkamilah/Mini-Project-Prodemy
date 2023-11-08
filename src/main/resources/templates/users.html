@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>List Product</title>
@@ -8,117 +8,109 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-</head>
+  </head>
 
-<body style="font-family: Cambria, sans-serif; font-size: 20px">
-<div data-theme="aqua" class="min-h-screen">
-    <div class="navbar bg-white px-20">
+  <body style="font-family: Cambria, sans-serif; font-size: 20px">
+    <div data-theme="aqua">
+      <div class="navbar bg-white px-20">
         <div class="flex-1">
-            <a class="normal-case text-xl text-black font-bold">Mini Project</a>
+          <a class="normal-case text-xl text-black font-bold">Mini Project</a>
         </div>
         <div class="flex-none">
-            <div class="">
-                <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
-            </div>
-            <div class="dropdown dropdown-end">
-                <label tabindex="0" class="btn btn-circle bg-white border-none hover:bg-white">
-                    <div class="indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-black fill-white" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                            />
-                        </svg>
-                        <!-- <span class="badge badge-sm indicator-item">8</span> -->
-                    </div>
-                </label>
-                <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-                    <div class="card-body">
-                        <span class="font-bold text-lg">8 Items</span>
-                        <div class="card-actions">
-                            <button class="btn btn-primary btn-block">View cart</button>
-                        </div>
-                    </div>
+          <div class="">
+            <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
+          </div>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-circle bg-white border-none hover:bg-white">
+              <div class="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-black fill-white" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <!-- <span class="badge badge-sm indicator-item">8</span> -->
+              </div>
+            </label>
+            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
+              <div class="card-body">
+                <span class="font-bold text-lg">8 Items</span>
+                <div class="card-actions">
+                  <button class="btn btn-primary btn-block">View cart</button>
                 </div>
+              </div>
             </div>
-            <div class="dropdown dropdown-end">
-                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                    <div class="w-10 rounded-full">
-                        <img th:src="@{/uploads/profilephoto.jpg}" />
-                    </div>
-                </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                    <li>
-                        <a th:href="@{/users/view/current}"> Profile </a>
-                    </li>
-                    <li><a th:href="@{/logout}">Logout</a></li>
-                </ul>
-            </div>
+          </div>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img th:src="@{/uploads/profilephoto.jpg}" />
+              </div>
+            </label>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <a th:href="@{/users/view/current}"> Profile </a>
+              </li>
+              <li><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+          </div>
         </div>
-    </div>
-    <div class="px-20 mt-10 w-full">
+      </div>
+      <div class="px-20 mt-10 w-full">
         <span class="material-symbols-outlined cursor:pointer text-3xl text-black hover:text-white">
-          <a th:href="@{/admin}"> arrow_back </a>
+          <a th:href="@{/}"> arrow_back </a>
         </span>
-    </div>
+      </div>
+      <div class="min-h-screen">
+        <div class="-mt-12">
+          <h1 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 50px">List User</h1>
 
-    <h1 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 50px;"> List
-        User </h1>
-
-        <div class="flex justify-center px-20">
-            <div class="flex gap-2 ">
-                <div class="form-control">
-                </div>
-                <!--                    <div th:if="${role == 'ADMIN'}">-->
-                <!--                        <div>-->
-                <!--                            <a th:href="@{/products/add}" class="btn btn-info btn-sm mb-3">Add Product</a>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
+          <div class="flex justify-center px-20">
+            <div class="flex gap-2">
+              <div class="form-control"></div>
+              <!--                    <div th:if="${role == 'ADMIN'}">-->
+              <!--                        <div>-->
+              <!--                            <a th:href="@{/products/add}" class="btn btn-info btn-sm mb-3">Add Product</a>-->
+              <!--                        </div>-->
+              <!--                    </div>-->
             </div>
 
-            <div>
-                <a th:href="@{/users/add}" style="margin: 20px 0" class="btn btn-primary">Add User</a>
-                <table style="font-size: 20px; margin: 10px;" align="center" border="1"
-                    class="table bg-white shadow table-striped table-responsive-md text-black">
-                    <thead style="font-size: 20px;" align="center" class="text-black">
-                        <tr>
-                            <th>Number</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody align="center">
-                        <tr th:each="user, index : ${users}">
-                            <td th:text="${index.index + 1}"></td>
-                            <td th:text="${user.name}"></td>
-                            <td th:text="${user.email}"></td>
-                            <!--                            <td> <button th:onclick="'addToCart(' + ${id} + ')'" class="btn btn-info btn-sm"> Add To Cart </button> </td>-->
+            <div class="flex flex-col gap-4">
+              <div class="flex justify-end">
+                <a th:href="@{/users/add}" class="btn btn-primary">Add User</a>
+              </div>
+              <div>
+                <table style="font-size: 20px" align="center" border="1" class="table bg-white shadow table-striped table-responsive-md text-black">
+                  <thead style="font-size: 20px" align="center" class="text-black">
+                    <tr>
+                      <th>Number</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody align="center">
+                    <tr th:each="user, index : ${users}">
+                      <td th:text="${index.index + 1}"></td>
+                      <td th:text="${user.name}"></td>
+                      <td th:text="${user.email}"></td>
+                      <!--                            <td> <button th:onclick="'addToCart(' + ${id} + ')'" class="btn btn-info btn-sm"> Add To Cart </button> </td>-->
 
-                            <!--                            <td><a th:href="@{/users/viewproduct/{id}(id=${product.id})}" class="btn btn-danger btn-sm">Detail-->
-                            <!--                                Product </a></td>-->
-                            <td><a th:href="@{/users/viewuser/{id}(id=${user.id})}" class="btn btn-danger btn-sm">
-                                    Detail
-                                    User </a></td>
-                            <td><a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Delete
-                                    User
-                                </a>
-                            </td>
-                            <td><a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Update
-                                    User
-                                </a>
-                            </td>
-
-                        </tr>
-                    </tbody>
+                      <!--                            <td><a th:href="@{/users/viewproduct/{id}(id=${product.id})}" class="btn btn-danger btn-sm">Detail-->
+                      <!--                                Product </a></td>-->
+                      <td><a th:href="@{/users/viewuser/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Detail User </a></td>
+                      <td><a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Delete User </a></td>
+                      <td><a th:href="@{/users/update/{id}(id=${user.id})}" class="btn btn-danger btn-sm"> Update User </a></td>
+                    </tr>
+                  </tbody>
                 </table>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-    </div>
-    </div>
-    </div>
-
+  </body>
 </html>

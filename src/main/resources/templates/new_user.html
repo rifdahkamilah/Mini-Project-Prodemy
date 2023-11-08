@@ -16,19 +16,9 @@
                 <div class="container">
                     <h3 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 30px;">
                         Add a new User </h3>
-                    <form th:action="@{/users/add}" method="post" th:object="${users}" enctype="multipart/form-data">
+                    <form th:action="@{/users/add}" method="post" th:object="${user}" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-sm-5">
-
-                                <!--        <input type="hidden" name="id" th:field="*{id}">-->
-                                <div class="flex flex-col">
-                                    <label for="name">Name</label>
-                                    <input style="margin: 5px;" type="text"
-                                           class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
-                                           required th:field="*{name}" id="name"
-                                           placeholder="Enter name">
-
-                                    <!--        <input type="hidden" name="id" th:field="*{id}">-->
                                     <div class="flex flex-col">
                                         <label for="name">Name</label>
                                         <input style="margin: 5px;" type="text"
@@ -37,7 +27,6 @@
                                     </div>
                                     <div class="flex flex-col">
                                         <label for="price">Email</label>
-<<<<<<< HEAD
                                         <input style="margin: 5px;" type="text"
                                             class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
                                             required th:field="*{email}" id="price" placeholder="Enter Email">
@@ -53,14 +42,6 @@
                         </form>
 
                     </div>
-=======
-                                        <input style="margin: 5px;" type="number"
-                                               class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
-                                               required th:field="*{email}" id="price"
-                                               placeholder="Price">
-                    </form>
-                    <button class="btn btn-success">Submit</button>
->>>>>>> fd3a295b3f5c1ca4d77c6df66c09e6dd766afcdb
                 </div>
             </div>
         </div>
