@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.prodemy.entity.Role;
 import com.prodemy.entity.User;
+import com.prodemy.model.AdminRoleEditRequest;
 import com.prodemy.model.RequestEditUser;
 import com.prodemy.model.UserDto;
 import com.prodemy.repository.RoleRepository;
@@ -97,7 +98,8 @@ public class UserServiceImplementation implements UserService {
     @Override
     public UserDto getCurrentUser(String email) {
         User user = userRepository.findByEmail(email);
-        return UserDto.builder().email(user.getEmail()).name(user.getName()).password(user.getPassword()).build();
+        return UserDto.builder().id(user.getId()).email(user.getEmail()).name(user.getName())
+                .password(user.getPassword()).build();
     }
 
     @Override
@@ -118,7 +120,24 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public void removeUserById(long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id).orElse(null);
+        for (Role role : user.getRoles()) {
+            role.getUsers().remove(user);
+        }
+
+        user.getRoles().clear();
+        userRepository.save(user);
+        roleRepository.saveAll(user.getRoles());
+        userRepository.delete(user);
+    }
+
+    @Override
+    public void editUserByAdmin(AdminRoleEditRequest request) {
+        User user = userRepository.findById(request.getId()).orElse(null);
+        user.setName(request.getName());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        userRepository.save(user);
     }
 
 }

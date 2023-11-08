@@ -7,6 +7,7 @@ import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
 import com.prodemy.model.ProductEditRequest;
 import com.prodemy.model.UserDto;
+import com.prodemy.repository.CartRepository;
 import com.prodemy.services.ProductService;
 import com.prodemy.services.UserService;
 
@@ -36,9 +37,14 @@ public class ProductController {
     private UserService userService;
 
     private String keyword;
+    private static int cartCount;
 
     @GetMapping("/products")
     public String listProducts(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<Product> productInCart = productService.getProductInCartByUserId(currentUser.getId());
+        cartCount = productInCart.size();
         return this.getProductsByName(model, null);
     }
 
@@ -62,6 +68,7 @@ public class ProductController {
         } else {
             model.addAttribute("products", productService.getAllProducts());
         }
+        model.addAttribute("cartCount", cartCount);
         return "products"; // html file
     }
 
@@ -77,6 +84,7 @@ public class ProductController {
             maxPrice = (long) Integer.parseInt(maxPriceInput);
             minPrice = (long) Integer.parseInt(minPriceInput);
         }
+        model.addAttribute("cartCount", cartCount);
 
         model.addAttribute("nameCurrentUser", currentUser.getName());
 
@@ -104,6 +112,7 @@ public class ProductController {
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         model.addAttribute("nameCurrentUser", currentUser.getName());
         model.addAttribute("products", new Product());
+        model.addAttribute("cartCount", cartCount);
         return "new_product";
     }
 
@@ -132,6 +141,7 @@ public class ProductController {
     @GetMapping("/product/delete/{id}")
     public String deleteProduct(@PathVariable long id) {
         productService.removeProductById(id);
+
         return "redirect:/products";
     }
 
@@ -142,6 +152,7 @@ public class ProductController {
         Product product = productService.getProductById(id);
         model.addAttribute("product", product);
         model.addAttribute("nameCurrentUser", user.getName());
+        model.addAttribute("cartCount", cartCount);
         return "edit_product";
     }
 
@@ -175,6 +186,7 @@ public class ProductController {
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         model.addAttribute("product", productService.getProductById(id));
         model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("cartCount", cartCount);
         return "view_product";
     }
 
@@ -182,6 +194,7 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") int id, Authentication userReq) {
         productService.addToCart(id, userReq.getName());
+        
         return "redirect:/cart";
     }
 
@@ -191,8 +204,8 @@ public class ProductController {
         model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
         model.addAttribute("cart", GlobalData.cart);
 
-//        List<Product> paymentMethods = productService.getAllPaymentMethods();
-//        model.addAttribute("paymentMethods", paymentMethods);
+        // List<Product> paymentMethods = productService.getAllPaymentMethods();
+        // model.addAttribute("paymentMethods", paymentMethods);
 
         return "cart";
     }
@@ -204,9 +217,21 @@ public class ProductController {
     }
 
     @GetMapping("/cart/addPaymentMethod/{method}")
-    public String addPayment(@PathVariable("method") String methodPayment){
-        //ambil productService.addPayment(methodPayment, id);
+    public String addPayment(@PathVariable("method") String methodPayment) {
+        // ambil productService.addPayment(methodPayment, id);
         return "redirect:/history";
+    }
+
+    @GetMapping("/users/cart/current")
+    public String getCartByUserId(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<Product> productInCart = productService.getProductInCartByUserId(currentUser.getId());
+
+        model.addAttribute("products", productInCart);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("cartCount", cartCount);
+        return "cartDetail";
     }
 
     // @GetMapping("/checkout")
@@ -218,14 +243,14 @@ public class ProductController {
     // }
 
     // payment methods
-//    @GetMapping("/cart")
-//    public String viewCart(Model model) {
-//        List<Product> paymentMethods = productService.getAllPaymentMethods();
-//        model.addAttribute("paymentMethods", paymentMethods);
-////
-////        List<Cart> carts = productService.getCartItems();
-////        model.addAttribute("cartItems", cartItems);
-//
-//        return "cart";
+    // @GetMapping("/cart")
+    // public String viewCart(Model model) {
+    // List<Product> paymentMethods = productService.getAllPaymentMethods();
+    // model.addAttribute("paymentMethods", paymentMethods);
+    ////
+    //// List<Cart> carts = productService.getCartItems();
+    //// model.addAttribute("cartItems", cartItems);
+    //
+    // return "cart";
 
 }

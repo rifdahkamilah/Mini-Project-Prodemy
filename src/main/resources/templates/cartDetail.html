@@ -62,43 +62,36 @@
           </div>
         </div>
       </div>
+      <div class="px-20 mt-10 w-full">
+        <span class="material-symbols-outlined cursor:pointer text-3xl text-black hover:text-white">
+          <a th:href="@{/}"> arrow_back </a>
+        </span>
+      </div>
+      <div class="-mt-12">
+        <h1 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 50px">Products in Cart</h1>
 
-      <div class="my-8">
-        <div class="jumbotron text-center" th:if="${role == 'ADMIN'}">
-          <h1 class="display-4">Welcome back, Admin</h1>
-          <p>Easily manage your data from this</p>
-        </div>
-
-        <div class="jumbotron text-center" th:if="${role == 'USER'}">
-          <h1 class="display-4">Welcome back, User</h1>
-          <p>Easily manage your data from this</p>
-        </div>
-
-        <div class="mt-8">
-          <div th:if="${role == 'ADMIN'}" class="flex gap-4 justify-center items-center w-full">
-            <div class="card w-96 bg-white text-primary content justify-content-center align-items-center">
-              <div class="card-body" style="color: black; margin: 5 px">
-                <h4 class="card-title">Users</h4>
-                <p class="card-text">Manage the users section here.</p>
-                <a th:href="@{/users}" class="card-link btn btn-primary">Manage</a>
-              </div>
-            </div>
-            <div class="card w-96 bg-white text-primary content justify-content-center align-items-center">
-              <div class="card-body" style="color: black; margin: 5 px">
-                <h4 class="card-title">Products</h4>
-                <p class="card-text">Manage all the products here.</p>
-                <a href="#" th:href="@{/products}" class="card-link btn btn-primary">Manage</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div th:if="${role == 'USER'}" class="flex justify-center items-center w-full">
-          <div class="card w-96 bg-white text-primary content">
-            <div class="card-body" style="color: black; margin: 5 px">
-              <h4 class="card-title">Products</h4>
-              <p class="card-text">See more the product in this store</p>
-              <a href="#" th:href="@{/products}" class="card-link btn btn-primary">See Product</a>
-            </div>
+        <div class="flex justify-center px-20">
+          <div class="mb-8">
+            <table style="font-size: 20px" align="center" border="1" class="table bg-white shadow table-striped table-responsive-md text-black">
+              <thead style="font-size: 20px" align="center" class="text-black">
+                <tr>
+                  <th>Number</th>
+                  <th>Product Name</th>
+                  <th>Product Image</th>
+                  <th>Product Description</th>
+                  <th>Product Price</th>
+                </tr>
+              </thead>
+              <tbody align="center">
+                <tr th:each="product, index : ${products}">
+                  <td th:text="${index.index + 1}"></td>
+                  <td th:text="${product.productName}"></td>
+                  <td><img th:src="@{'/uploads/' + ${product.productImage}}" alt="Product Image" style="width: 100px; height: 100px" /></td>
+                  <td th:text="${product.productDescription}"></td>
+                  <td th:text="${product.productPrice}"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

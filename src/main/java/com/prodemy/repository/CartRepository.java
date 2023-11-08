@@ -11,4 +11,7 @@ import com.prodemy.entity.Cart;
 public interface CartRepository extends JpaRepository<Cart, Long> {
     @Query(value = "SELECT * FROM cart WHERE product_id = :product_id", nativeQuery = true)
     public List<Cart> getCartByProductId(@Param("product_id") long id);
+
+    @Query(value = "SELECT * FROM cart WHERE user_id = :user_id", nativeQuery = true)
+    public List<Cart> getCartByUserId(@Param("user_id") long id);
 }

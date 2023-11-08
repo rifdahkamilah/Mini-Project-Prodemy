@@ -7,10 +7,13 @@ import com.prodemy.repository.CartRepository;
 import com.prodemy.repository.ProductRepository;
 import com.prodemy.repository.UserRepository;
 
+import org.hibernate.mapping.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -127,10 +130,10 @@ public class ProductServiceImplementation implements ProductService {
     public void editProduct(Product product) {
         productRepository.save(product);
     }
-//    @Override
-//    public List<Product> getAllPaymentMethods() {
-//        return productRepository.findAll();
-//    }
+    // @Override
+    // public List<Product> getAllPaymentMethods() {
+    // return productRepository.findAll();
+    // }
 
     @Override
     public void addPayment(String methodPayment, long id) {
@@ -138,6 +141,18 @@ public class ProductServiceImplementation implements ProductService {
         cart.setMetodePembayaran(methodPayment);
 
         cartRepository.save(cart);
+    }
+
+    @Override
+    public List<Product> getProductInCartByUserId(long id) {
+        List<Cart> cart = cartRepository.getCartByUserId(id);
+        List<Product> product = new ArrayList<Product>(cart.size());
+        if (cart.size() > 0) {
+            for (int i = 0; i < cart.size(); i++) {
+                product.add(productRepository.findById(cart.get(i).getProducts().getId()).orElse(null));
+            }
+        }
+        return product;
     }
 
 }

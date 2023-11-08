@@ -3,6 +3,7 @@ package com.prodemy.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -33,6 +34,6 @@ public class Product {
     private String productImage;
 
     @OneToMany(mappedBy = "products", fetch = FetchType.LAZY,
-            cascade = CascadeType.MERGE)
-    private Set<Cart> carts;
+            cascade = CascadeType.ALL)
+    private List<Cart> carts;
 }

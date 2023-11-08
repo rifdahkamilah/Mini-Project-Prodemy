@@ -2,6 +2,7 @@ package com.prodemy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +22,7 @@ public class UserController {
     @GetMapping("/users/view/current")
     public String viewUser(Authentication userReq, Model model) {
         UserDto user = userService.getCurrentUser(userReq.getName());
+        model.addAttribute("nameCurrentUser", user.getName());
         model.addAttribute("user", user);
         return "viewprofile";
     }
@@ -29,6 +31,7 @@ public class UserController {
     public String editUser(Authentication userReq, Model model) {
         UserDto user = userService.getCurrentUser(userReq.getName());
         model.addAttribute("user", user);
+        model.addAttribute("nameCurrentUser", user.getName());
         return "editprofile";
     }
 

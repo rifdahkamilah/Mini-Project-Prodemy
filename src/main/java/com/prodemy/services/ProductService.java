@@ -1,5 +1,6 @@
 package com.prodemy.services;
 
+import com.prodemy.entity.Cart;
 import com.prodemy.entity.Product;
 
 import java.util.List;
@@ -29,6 +30,8 @@ public interface ProductService {
 
     public void addPayment(String methodPayment, long id);
 
-//    List<Product> getAllPaymentMethods();
+    public List<Product> getProductInCartByUserId(long id);
+
+    // List<Product> getAllPaymentMethods();
 
 }

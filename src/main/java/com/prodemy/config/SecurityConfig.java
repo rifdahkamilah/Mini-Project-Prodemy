@@ -17,6 +17,8 @@ public class SecurityConfig {
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorize) -> authorize
                 .requestMatchers("/registration**", "/js/**", "/css/**", "/img/**").permitAll()
+                .requestMatchers("/users/view/current", "/users/edit/current").permitAll()
+                .requestMatchers("/users**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .loginPage("/login").loginProcessingUrl("/login").defaultSuccessUrl("/", true)

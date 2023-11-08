@@ -1,7 +1,10 @@
 package com.prodemy.controller;
 
+import com.prodemy.model.AdminRoleEditRequest;
 import com.prodemy.model.UserDto;
+import com.prodemy.services.ProductService;
 import com.prodemy.services.UserService;
+import com.prodemy.entity.Product;
 import com.prodemy.entity.User;
 
 import java.util.List;
@@ -19,16 +22,24 @@ public class AdminController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    ProductService productService;
+
+    private static int cartCount;
+
     @GetMapping("/")
     public String adminHome(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<Product> productInCart = productService.getProductInCartByUserId(currentUser.getId());
+        cartCount = productInCart.size();
         model.addAttribute("nameCurrentUser", currentUser.getName());
         if (auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ADMIN"))) {
             model.addAttribute("role", "ADMIN");
         } else {
             model.addAttribute("role", "USER");
         }
+        model.addAttribute("cartCount", cartCount);
         return "adminHome";
     }
 
@@ -39,6 +50,7 @@ public class AdminController {
         List<User> user = userService.getAllUsers(auth.getName());
         model.addAttribute("users", user);
         model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("cartCount", cartCount);
         return "users";
     }
 
@@ -46,6 +58,7 @@ public class AdminController {
     public String getUserAdd(Model model) {
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("cartCount", cartCount);
         return "new_user";
     }
 
@@ -77,18 +90,26 @@ public class AdminController {
         //
         // model.addAttribute("user", new User());
         // model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("cartCount", cartCount);
         model.addAttribute("nameCurrentUser", currentUser.getName());
         return "view_user";
     }
 
     @GetMapping("/users/update/{id}")
-    public String updateUser(@PathVariable int id, Model model) {
+    public String updateUserGet(@PathVariable int id, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
 
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
+        model.addAttribute("cartCount", cartCount);
         model.addAttribute("nameCurrentUser", currentUser.getName());
         return "update_user";
+    }
+
+    @PostMapping("/users/update")
+    public String updateUserPost(@ModelAttribute("user") AdminRoleEditRequest user) {
+        userService.editUserByAdmin(user);
+        return "redirect:/users?UpdateSuccess";
     }
 }
