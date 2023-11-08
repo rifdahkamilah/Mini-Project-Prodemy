@@ -113,12 +113,6 @@ public class UserServiceImplementation implements UserService {
 
     @Override
     public User getUserById(long id) {
-        // User user = new User();
-        // if (us.isPresent()) {
-        // user = optional.get();
-        // } else {
-        // throw new RuntimeException("ID User tidak dapat ditemukan :: " + id);
-        // }
         return userRepository.findById(id).orElse(null);
     }
 

@@ -69,7 +69,7 @@ public class AdminController {
         return "new_user";
     }
 
-    @GetMapping({ "/users/viewuser/{id}" })
+    @GetMapping({"/users/viewuser/{id}"})
     public String viewProduct(Model model, @PathVariable(value = "id") long id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
