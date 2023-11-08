@@ -9,32 +9,47 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body style="font-family: Cambria, sans-serif; font-size: 20px;">
-<div data-theme="aqua" class="min-h-screen">
+    <div data-theme="aqua" class="min-h-screen">
 
-    <div class="flex justify-center">
-        <div class="flex-none gap-2">
-            <div class="form-control">
-                <div class="container">
-                    <h3 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 30px;"> Add a new User </h3>
-                    <form th:action="@{/users/add}" method="post" th:object="${users}" enctype="multipart/form-data">
-                        <div class="row">
-                            <div class="col-sm-5">
+        <div class="flex justify-center">
+            <div class="flex-none gap-2">
+                <div class="form-control">
+                    <div class="container">
+                        <h3
+                            style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 30px;">
+                            Add a new User </h3>
+                        <form th:action="@{/users/add}" method="post" th:object="${user}" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-sm-5">
 
-                                <!--        <input type="hidden" name="id" th:field="*{id}">-->
-                                <div class="flex flex-col">
-                                    <label for="name">Name</label>
-                                    <input style="margin: 5px;" type="text" class="input input-bordered w-24 md:w-auto bg-white shadow text-black" required th:field="*{user.name}" id="name"
-                                           placeholder="Enter name">
-
+                                    <!--        <input type="hidden" name="id" th:field="*{id}">-->
+                                    <div class="flex flex-col">
+                                        <label for="name">Name</label>
+                                        <input style="margin: 5px;" type="text"
+                                            class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
+                                            required th:field="*{name}" id="name" placeholder="Enter name">
+                                    </div>
                                     <div class="flex flex-col">
                                         <label for="price">Email</label>
-                                        <input style="margin: 5px;" type="number" class="input input-bordered w-24 md:w-auto bg-white shadow text-black" required th:field="*{user.email}" id="price"
-                                               placeholder="Price">
-                    </form>
-                        <button class="btn btn-success">Submit</button>
+                                        <input style="margin: 5px;" type="text"
+                                            class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
+                                            required th:field="*{email}" id="price" placeholder="Enter Email">
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <label for="price">Password</label>
+                                        <input style="margin: 5px;" type="password"
+                                            class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
+                                            required th:field="*{password}" id="price" placeholder="Enter Password">
+                                    </div>
+
+                                    <button class="btn btn-success">Submit</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
 </body>
+
 </html>

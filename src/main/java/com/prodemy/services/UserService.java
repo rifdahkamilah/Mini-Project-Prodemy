@@ -17,13 +17,11 @@ public interface UserService extends UserDetailsService {
     public void editUser(String email, RequestEditUser userDto);
     public UserDto getCurrentUser(String email);
 
-    List<User> getAllUsers();
+    List<User> getAllUsers(String email);
 
     User getUserById(long id);
 
-    User getUsertById(long id);
 
-    void addUser(User user);
 
     void removeUserById(long id);
 

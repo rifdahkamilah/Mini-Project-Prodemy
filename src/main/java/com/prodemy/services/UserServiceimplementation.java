@@ -62,7 +62,8 @@ public class UserServiceImplementation implements UserService {
         validator.validate(req);
         log.info("request {} ", req);
 
-        org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(req.getEmail(), req.getPassword(),
+        org.springframework.security.core.userdetails.User user = new org.springframework.security.core.userdetails.User(
+                req.getEmail(), req.getPassword(),
                 getAuthorities(req.getRoles()));
         return user;
     }
@@ -100,31 +101,25 @@ public class UserServiceImplementation implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers(String email) {
+        List<User> user = userRepository.findAll();
+        for (int i = 0; i < user.size(); i++) {
+            if (user.get(i).getEmail().equals(email)) {
+                user.remove(i);
+            }
+        }
+        return user;
     }
 
     @Override
     public User getUserById(long id) {
-        return null;
-    }
-
-
-    @Override
-    public User getUsertById(long id) {
-        //        User user = new User();
-//        if (us.isPresent()) {
-//            user = optional.get();
-//        } else {
-//            throw new RuntimeException("ID User tidak dapat ditemukan :: " + id);
-//        }
+        // User user = new User();
+        // if (us.isPresent()) {
+        // user = optional.get();
+        // } else {
+        // throw new RuntimeException("ID User tidak dapat ditemukan :: " + id);
+        // }
         return userRepository.findById(id).orElse(null);
-    }
-
-
-    @Override
-    public void addUser(User user) {
-        userRepository.save(user);
     }
 
     @Override
