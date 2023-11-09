@@ -2,7 +2,6 @@ package com.prodemy.controller;
 
 import com.prodemy.entity.HistoryPemesanan;
 import com.prodemy.entity.Product;
-import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
 import com.prodemy.model.ProductEditRequest;
 import com.prodemy.model.UserDto;
@@ -257,7 +256,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-
     @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -290,13 +288,6 @@ public class ProductController {
         return "cart";
     }
 
-    @GetMapping("/cart/removeItem/{id}")
-    public String cartItemRemove(@PathVariable int id) {
-        GlobalData.cart.remove(id);
-        return "redirect:/cart";
-    }
-
-
     @GetMapping("/users/cart/current")
     public String getCartByUserId(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -319,7 +310,7 @@ public class ProductController {
     }
 
     @GetMapping("/histori")
-    public String getHisTory(Model model) {
+    public String getHisToryCurrentUser(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         List<HistoryPemesanan> historyPemesananan = productService.getHistoryByIdUser(currentUser.getId());
@@ -329,5 +320,28 @@ public class ProductController {
         return "history";
     }
 
-    
+    @GetMapping("/users/cart/history/{id}")
+    public String getHisToryUser(Model model, @PathVariable("id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<HistoryPemesanan> historyPemesananan = productService.getHistoryByIdUser(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("histories", historyPemesananan);
+        return "viewHistoryUser";
+    }
+
+    @GetMapping("/users/cart/{id}")
+    public String getCartUser(Model model, @PathVariable("id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<Product> productInCart = productService.getProductInCartByUserId(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("products", productInCart);
+        return "viewCartUser";
+    }
+
 }
