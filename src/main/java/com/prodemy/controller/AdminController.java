@@ -86,10 +86,6 @@ public class AdminController {
             model.addAttribute("user", new User());
             System.out.println("Bag of d**ks");
         }
-        //
-        //
-        // model.addAttribute("user", new User());
-        // model.addAttribute("user", userService.getUserById(id));
         model.addAttribute("cartCount", cartCount);
         model.addAttribute("nameCurrentUser", currentUser.getName());
         return "view_user";

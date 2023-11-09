@@ -1,14 +1,10 @@
 package com.prodemy.controller;
 
-import com.prodemy.entity.Cart;
 import com.prodemy.entity.HistoryPemesanan;
-//import com.prodemy.entity.PaymentMethod;
 import com.prodemy.entity.Product;
-import com.prodemy.global.GlobalData;
 import com.prodemy.model.ProductDto;
 import com.prodemy.model.ProductEditRequest;
 import com.prodemy.model.UserDto;
-import com.prodemy.repository.CartRepository;
 import com.prodemy.services.ProductService;
 import com.prodemy.services.UserService;
 
@@ -25,12 +21,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.StringUtils;
 
 @Controller
 public class ProductController {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/demo/src/main/resources/static/uploads";
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
 
     @Autowired
     private ProductService productService;
@@ -120,22 +115,53 @@ public class ProductController {
 
     @PostMapping("/products/add")
     public String productAddPost(@ModelAttribute("products") ProductDto productDTO,
-            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
+            @RequestParam("productImage") MultipartFile file, @RequestParam("extraImage1") MultipartFile file1,
+            @RequestParam("extraImage2") MultipartFile file2, @RequestParam("extraImage3") MultipartFile file3,
+            @RequestParam("extraImage4") MultipartFile file4, @RequestParam("imageNameMain") String nameImage,
+            @RequestParam("imageNameExtra1") String nameImage1, @RequestParam("imageNameExtra2") String nameImage2,
+            @RequestParam("imageNameExtra3") String nameImage3, @RequestParam("imageNameExtra4") String nameImage4)
             throws IOException {
         Product product = new Product();
-        // product.setId();
         product.setProductName(productDTO.getProductName());
         product.setProductPrice(productDTO.getProductPrice());
         product.setProductDescription(productDTO.getProductDescription());
         String imageUUID;
+        String imageExtra1;
+        String imageExtra2;
+        String imageExtra3;
+        String imageExtra4;
         if (!file.isEmpty()) {
             imageUUID = file.getOriginalFilename();
             Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
             Files.write(fileNameAndPath, file.getBytes());
+
+            imageExtra1 = file1.getOriginalFilename();
+            Path fileNameAndPathExtra1 = Paths.get(UPLOAD_DIRECTORY, imageExtra1);
+            Files.write(fileNameAndPathExtra1, file1.getBytes());
+
+            imageExtra2 = file2.getOriginalFilename();
+            Path fileNameAndPathExtra2 = Paths.get(UPLOAD_DIRECTORY, imageExtra2);
+            Files.write(fileNameAndPathExtra2, file2.getBytes());
+
+            imageExtra3 = file3.getOriginalFilename();
+            Path fileNameAndPathExtra3 = Paths.get(UPLOAD_DIRECTORY, imageExtra3);
+            Files.write(fileNameAndPathExtra3, file3.getBytes());
+
+            imageExtra4 = file4.getOriginalFilename();
+            Path fileNameAndPathExtra4 = Paths.get(UPLOAD_DIRECTORY, imageExtra4);
+            Files.write(fileNameAndPathExtra4, file4.getBytes());
         } else {
             imageUUID = nameImage;
+            imageExtra1 = nameImage1;
+            imageExtra2 = nameImage2;
+            imageExtra3 = nameImage3;
+            imageExtra4 = nameImage4;
         }
         product.setProductImage(imageUUID);
+        product.setExtraImage1(imageExtra1);
+        product.setExtraImage2(imageExtra2);
+        product.setExtraImage3(imageExtra3);
+        product.setExtraImage4(imageExtra4);
         productService.addProduct(product);
         return "redirect:/products";
     }
@@ -160,64 +186,76 @@ public class ProductController {
 
     @PostMapping("/product/update")
     public String updateProductPost(@ModelAttribute("products") ProductEditRequest productReq,
-            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
+            @RequestParam("productImage") MultipartFile file, @RequestParam("extraImage1") MultipartFile file1,
+            @RequestParam("extraImage2") MultipartFile file2, @RequestParam("extraImage3") MultipartFile file3,
+            @RequestParam("extraImage4") MultipartFile file4, @RequestParam("imageNameMain") String nameImage,
+            @RequestParam("imageNameExtra1") String nameImage1, @RequestParam("imageNameExtra2") String nameImage2,
+            @RequestParam("imageNameExtra3") String nameImage3, @RequestParam("imageNameExtra4") String nameImage4)
             throws IOException {
         Product product = new Product();
         product.setId(productReq.getId());
         product.setProductName(productReq.getProductName());
         product.setProductPrice(productReq.getProductPrice());
         product.setProductDescription(productReq.getProductDescription());
+        System.out.println("file main : " + file.getOriginalFilename());
+        System.out.println("file main 1 : " + file1.getOriginalFilename());
+        System.out.println("file main 2: " + file2.getOriginalFilename());
+        System.out.println("file main 3: " + file3.getOriginalFilename());
+        System.out.println("file main 4: " + file4.getOriginalFilename());
         String imageUUID;
+        String imageExtra1;
+        String imageExtra2;
+        String imageExtra3;
+        String imageExtra4;
         if (!file.isEmpty()) {
             imageUUID = file.getOriginalFilename();
             Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
             Files.write(fileNameAndPath, file.getBytes());
+
         } else {
             imageUUID = nameImage;
         }
+
+        if (!file1.isEmpty()) {
+            imageExtra1 = file1.getOriginalFilename();
+            Path fileNameAndPathExtra1 = Paths.get(UPLOAD_DIRECTORY, imageExtra1);
+            Files.write(fileNameAndPathExtra1, file1.getBytes());
+        } else {
+            imageExtra1 = nameImage1;
+        }
+
+        if (!file2.isEmpty()) {
+            imageExtra2 = file2.getOriginalFilename();
+            Path fileNameAndPathExtra2 = Paths.get(UPLOAD_DIRECTORY, imageExtra2);
+            Files.write(fileNameAndPathExtra2, file2.getBytes());
+        } else {
+            imageExtra2 = nameImage2;
+        }
+
+        if (!file3.isEmpty()) {
+            imageExtra3 = file3.getOriginalFilename();
+            Path fileNameAndPathExtra3 = Paths.get(UPLOAD_DIRECTORY, imageExtra3);
+            Files.write(fileNameAndPathExtra3, file3.getBytes());
+        } else {
+            imageExtra3 = nameImage3;
+        }
+
+        if (!file4.isEmpty()) {
+            imageExtra4 = file4.getOriginalFilename();
+            Path fileNameAndPathExtra4 = Paths.get(UPLOAD_DIRECTORY, imageExtra4);
+            Files.write(fileNameAndPathExtra4, file4.getBytes());
+        } else {
+            imageExtra4 = nameImage4;
+        }
         product.setProductImage(imageUUID);
+        product.setExtraImage1(imageExtra1);
+        product.setExtraImage2(imageExtra2);
+        product.setExtraImage3(imageExtra3);
+        product.setExtraImage4(imageExtra4);
         productService.addProduct(product);
         return "redirect:/products";
     }
 
-    // view detail product
-
-//     @PostMapping("/admin/products/add")
-//     public String handleFormSubmit(@ModelAttribute("productDTO") Product product,
-//                                    @RequestParam("mainImage") MultipartFile multipartFile1,
-//                                    @RequestParam("extraImage1") MultipartFile multipartFile2,
-//                                    @RequestParam("extraImage2") MultipartFile multipartFile3,
-//                                    @RequestParam("extraImage3") MultipartFile multipartFile4) throws IOException {
-
-//         String mainImage = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
-//         String extraImage1 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
-//         String extraImage2 = StringUtils.cleanPath(multipartFile3.getOriginalFilename());
-//         String extraImage3 = StringUtils.cleanPath(multipartFile4.getOriginalFilename());
-
-//         product.setId(product.getId());
-//         product.setName(product.getName());
-// //        product.setCategory(categoryService.getCategoryById(product.getCategoryId()).get());
-//         product.setPrice(product.getPrice());
-//         product.setWeight(product.getWeight());
-//         product.setDescription(product.getDescription());
-//         product.setMainImage(product.getMainImage());
-//         product.setExtraImage1(product.getExtraImage1());
-//         product.setExtraImage2(product.getExtraImage2());
-//         product.setExtraImage3(product.getExtraImage3());
-// //        candidate.setProfilePicture(profilePictureFileName);
-// //        candidate.setPhotoId(photoIdFileName);
-// //        candidate.setDocument(documentFileName);
-
-//         Product savedProduct = productService.addProduct(product);
-//         String uploadDir = "product/" + savedProduct.getId();
-
-//         FileUploadUtil.saveFile(uploadDir, mainImage, multipartFile1);
-//         FileUploadUtil.saveFile(uploadDir, extraImage1, multipartFile2);
-//         FileUploadUtil.saveFile(uploadDir, extraImage2, multipartFile3);
-//         FileUploadUtil.saveFile(uploadDir, extraImage3, multipartFile3);
-
-//         return "redirect:/admin/products";
-//     }
 
     @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
@@ -233,7 +271,6 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") int id, Authentication userReq) {
         productService.addToCart(id, userReq.getName());
-
         return "redirect:/products?successAddToCart";
     }
 
@@ -242,6 +279,7 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         List<Product> productInCart = productService.getProductInCartByUserId(currentUser.getId());
+        System.out.println(productInCart.size());
         long countPrice = productService.countPriceProducts(productInCart);
 
         model.addAttribute("total", countPrice);
@@ -250,26 +288,6 @@ public class ProductController {
         model.addAttribute("cartCount", productInCart.size());
         return "cart";
     }
-
-    @GetMapping("/cart/removeItem/{id}")
-    public String cartItemRemove(@PathVariable int id) {
-        GlobalData.cart.remove(id);
-        return "redirect:/cart";
-    }
-
-    // @GetMapping("/cart/addPaymentMethod/{method}")
-    // public String addPayment(@PathVariable("method") String paymentMethod, long
-    // id) {
-    // productService.addPayment(paymentMethod, id);
-    // return "redirect:/history";
-    // }
-
-    // @GetMapping("/cart/addDeliveryMethod/{method}")
-    // public String addDelivery(@PathVariable("method") String deliveryMethod, long
-    // id) {
-    // productService.addDelivery(deliveryMethod, id);
-    // return "redirect:/history";
-    // }
 
     @GetMapping("/users/cart/current")
     public String getCartByUserId(Model model) {
@@ -303,23 +321,5 @@ public class ProductController {
         return "history";
     }
 
-    // @GetMapping("/checkout")
-    // public String checkout(Model model) {
-    // model.addAttribute("total",
-    // GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
-    // return "checkout";
-    //
-    // }
-
-    // payment methods
-    // @GetMapping("/cart")
-    // public String viewCart(Model model) {
-    // List<Product> paymentMethods = productService.getAllPaymentMethods();
-    // model.addAttribute("paymentMethods", paymentMethods);
-    ////
-    //// List<Cart> carts = productService.getCartItems();
-    //// model.addAttribute("cartItems", cartItems);
-    //
-    // return "cart";
-
+    
 }

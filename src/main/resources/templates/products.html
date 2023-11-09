@@ -61,10 +61,10 @@
                         <a th:href="@{/users/view/current}">Profile</a>
                     </li>
                     <li>
-                        <a th:href="@{/cart}">Detail Pesanan</a>
+                        <a th:href="@{/cart}">Order Detail</a>
                     </li>
                     <li>
-                        <a th:href="@{/histori}">Histori Pesanan</a>
+                        <a th:href="@{/histori}">Transaction History</a>
                     </li>
                     <li><a th:href="@{/logout}">Logout</a></li>
                 </ul>
@@ -134,12 +134,12 @@
                                 </a>
                             </td>
                             <td><a th:href="@{/product/viewproduct/{id}(id=${product.id})}"
-                                   class="btn btn-danger btn-sm">Detail Product </a></td>
+                                   class="btn btn-success btn-sm">Detail Product </a></td>
                             <div th:if="${role == 'ADMIN'}">
                                 <td><a th:href="@{/product/delete/{id}(id=${product.id})}"
-                                       class="btn btn-danger btn-sm"> Delete Product </a></td>
+                                       class="btn btn-error btn-sm"> Delete Product </a></td>
                                 <td><a th:href="@{/product/update/{id}(id=${product.id})}"
-                                       class="btn btn-danger btn-sm"> Update Product </a></td>
+                                       class="btn btn-success btn-sm"> Update Product </a></td>
                             </div>
                         </tr>
                         </tbody>
