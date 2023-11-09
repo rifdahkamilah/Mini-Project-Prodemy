@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>List Product</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  </head>
+
+  <body style="font-family: Cambria, sans-serif; font-size: 20px">
+    <div data-theme="aqua" class="min-h-screen">
+      <div class="navbar bg-white px-20">
+        <div class="flex-1">
+          <a class="normal-case text-xl text-black font-bold">Mini Project Prodemy</a>
+        </div>
+        <div class="flex-none">
+          <div class="">
+            <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
+          </div>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img th:src="@{/uploads/profilephoto.jpg}" />
+              </div>
+            </label>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <a th:href="@{/users/view/current}">Profile</a>
+              </li>
+              <li><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="px-20 mt-10 w-full">
+        <span class="material-symbols-outlined cursor:pointer text-3xl text-black hover:text-white">
+          <a th:href="@{/}"> arrow_back </a>
+        </span>
+      </div>
+      <div class="-mt-12">
+        <h1 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 50px">History Product</h1>
+
+        <div class="flex justify-center px-20">
+          <div class="flex flex-col gap-2">
+            <div class="mb-8">
+              <table style="font-size: 20px" align="center" border="1" class="table bg-white shadow table-striped table-responsive-md text-black">
+                <thead style="font-size: 20px" align="center" class="text-black">
+                  <tr class="capitalize">
+                    <th>Number</th>
+                    <th>Product Name</th>
+                    <th>Product Image</th>
+                    <th>Product Price</th>
+                    <th>tanggal transaksi</th>
+                  </tr>
+                </thead>
+                <tbody align="center">
+                  <tr th:each="product, index : ${histories}">
+                    <td th:text="${index.index + 1}"></td>
+                    <td th:text="${product.namaProduct}"></td>
+                    <td><img th:src="@{'/uploads/' + ${product.gambarProduct}}" alt="Product Image" style="width: 100px; height: 100px" /></td>
+                    <td th:text="${product.hargaProduct}"></td>
+                    <td th:text="${product.tanggal_transaksi}"></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

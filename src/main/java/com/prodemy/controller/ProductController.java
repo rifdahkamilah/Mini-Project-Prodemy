@@ -1,6 +1,7 @@
 package com.prodemy.controller;
 
 import com.prodemy.entity.Cart;
+import com.prodemy.entity.HistoryPemesanan;
 //import com.prodemy.entity.PaymentMethod;
 import com.prodemy.entity.Product;
 import com.prodemy.global.GlobalData;
@@ -194,19 +195,21 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") int id, Authentication userReq) {
         productService.addToCart(id, userReq.getName());
-        
-        return "redirect:/cart";
+
+        return "redirect:/products?successAddToCart";
     }
 
     @GetMapping("/cart")
     public String cartGet(Model model) {
-        model.addAttribute("cartCount", GlobalData.cart.size());
-        model.addAttribute("total", GlobalData.cart.stream().mapToDouble(Product::getProductPrice).sum());
-        model.addAttribute("cart", GlobalData.cart);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<Product> productInCart = productService.getProductInCartByUserId(currentUser.getId());
+        long countPrice = productService.countPriceProducts(productInCart);
 
-        // List<Product> paymentMethods = productService.getAllPaymentMethods();
-        // model.addAttribute("paymentMethods", paymentMethods);
-
+        model.addAttribute("total", countPrice);
+        model.addAttribute("products", productInCart);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("cartCount", productInCart.size());
         return "cart";
     }
 
@@ -216,11 +219,19 @@ public class ProductController {
         return "redirect:/cart";
     }
 
-    @GetMapping("/cart/addPaymentMethod/{method}")
-    public String addPayment(@PathVariable("method") String methodPayment) {
-        // ambil productService.addPayment(methodPayment, id);
-        return "redirect:/history";
-    }
+    // @GetMapping("/cart/addPaymentMethod/{method}")
+    // public String addPayment(@PathVariable("method") String paymentMethod, long
+    // id) {
+    // productService.addPayment(paymentMethod, id);
+    // return "redirect:/history";
+    // }
+
+    // @GetMapping("/cart/addDeliveryMethod/{method}")
+    // public String addDelivery(@PathVariable("method") String deliveryMethod, long
+    // id) {
+    // productService.addDelivery(deliveryMethod, id);
+    // return "redirect:/history";
+    // }
 
     @GetMapping("/users/cart/current")
     public String getCartByUserId(Model model) {
@@ -232,6 +243,26 @@ public class ProductController {
         model.addAttribute("nameCurrentUser", currentUser.getName());
         model.addAttribute("cartCount", cartCount);
         return "cartDetail";
+    }
+
+    @PostMapping("/cart/checkout")
+    public String checkout(@RequestParam("paymentMethod") String paymentMethod,
+            @RequestParam("deliveryMethod") String deliveryMethod) throws Exception {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        productService.addPaymentAndaddDelivery(paymentMethod, deliveryMethod, currentUser.getId());
+        return "redirect:/products?successAddToCart";
+    }
+
+    @GetMapping("/histori")
+    public String getHisTory(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<HistoryPemesanan> historyPemesananan = productService.getHistoryByIdUser(currentUser.getId());
+
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("histories", historyPemesananan);
+        return "history";
     }
 
     // @GetMapping("/checkout")

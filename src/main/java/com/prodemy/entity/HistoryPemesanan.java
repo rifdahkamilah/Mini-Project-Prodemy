@@ -1,38 +1,41 @@
 package com.prodemy.entity;
 
-import org.springframework.lang.Nullable;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.time.LocalDate;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class Cart {
+@Entity
+@Table(name = "history")
+public class HistoryPemesanan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Nullable
-    private String paymentMethod;
+    private String namaProduct;
+    private String gambarProduct;
+    private long hargaProduct;
 
-    @Nullable
-    private String deliveryMethod;
-    private String status;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Product products;
+    @Column(name = "tanggal_transaksi", columnDefinition = "DATE")
+    @Temporal(TemporalType.DATE)
+    private LocalDate tanggal_transaksi;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User users;
+
 }
