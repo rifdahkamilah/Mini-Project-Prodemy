@@ -112,7 +112,7 @@ public class ProductServiceImplementation implements ProductService {
         List<Product> product = new ArrayList<Product>(cart.size());
         if (cart.size() > 0) {
             for (int i = 0; i < cart.size(); i++) {
-                if (cart.get(0).getStatus().equals("belum terbayar")) {
+                if (cart.get(i).getStatus().equals("belum terbayar")) {
                     product.add(productRepository.findById(cart.get(i).getProducts().getId()).orElse(null));
                 }
             }
@@ -135,12 +135,11 @@ public class ProductServiceImplementation implements ProductService {
         LocalDate today = LocalDate.now();
         User user = userRepository.findById(id).orElse(null);
         List<HistoryPemesanan> history = new ArrayList<HistoryPemesanan>(cart.size());
-
         List<Product> products = new ArrayList<Product>(cart.size());
 
         if (cart.size() > 0) {
             for (int i = 0; i < cart.size(); i++) {
-                if (cart.get(0).getStatus().equals("belum terbayar")) {
+                if (cart.get(i).getStatus().equals("belum terbayar")) {
                     products.add(productRepository.findById(cart.get(i).getProducts().getId()).orElse(null));
                 }
             }
@@ -148,15 +147,19 @@ public class ProductServiceImplementation implements ProductService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User ini belum melakukan add to cart");
         }
 
-        if (cart.size() > 0) {
+        if (products.size() > 0 && cart.size() > 0) {
             for (int i = 0; i < cart.size(); i++) {
-                cart.get(i).setStatus("terbayar");
-                cart.get(i).setDeliveryMethod(deliveryMethod);
-                cart.get(i).setPaymentMethod(paymentMethod);
-                history.add(new HistoryPemesanan(0, products.get(i).getProductName(), products.get(i).getProductImage(),
-                        products.get(i).getProductPrice(), today, user));
-                cartRepository.save(cart.get(i));
-                historyPemesanantRepository.save(history.get(i));
+                if (cart.get(i).getStatus().equals("belum terbayar")) {
+                    cart.get(i).setStatus("terbayar");
+                    cart.get(i).setDeliveryMethod(deliveryMethod);
+                    cart.get(i).setPaymentMethod(paymentMethod);
+                    cartRepository.save(cart.get(i));
+                }
+            }
+            for (int j = 0; j < products.size(); j++) {
+                history.add(new HistoryPemesanan(0, products.get(j).getProductName(), products.get(j).getProductImage(),
+                        products.get(j).getProductPrice(), today, user));
+                historyPemesanantRepository.save(history.get(j));
             }
         } else {
             throw new Exception("User ini tidak memiliki cart");

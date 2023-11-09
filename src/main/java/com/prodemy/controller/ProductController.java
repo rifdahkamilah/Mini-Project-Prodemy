@@ -158,66 +158,74 @@ public class ProductController {
         return "edit_product";
     }
 
-//    @PostMapping("/product/update")
-//    public String updateProductPost(@ModelAttribute("products") ProductEditRequest productReq,
-//            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
-//            throws IOException {
-//        Product product = new Product();
-//        product.setId(productReq.getId());
-//        product.setProductName(productReq.getProductName());
-//        product.setProductPrice(productReq.getProductPrice());
-//        product.setProductDescription(productReq.getProductDescription());
-//        String imageUUID;
-//        if (!file.isEmpty()) {
-//            imageUUID = file.getOriginalFilename();
-//            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
-//            Files.write(fileNameAndPath, file.getBytes());
-//        } else {
-//            imageUUID = nameImage;
-//        }
-//        product.setProductImage(imageUUID);
-//        productService.addProduct(product);
-//        return "redirect:/products";
-//    }
+    // @PostMapping("/product/update")
+    // public String updateProductPost(@ModelAttribute("products")
+    // ProductEditRequest productReq,
+    // @RequestParam("productImage") MultipartFile file, @RequestParam("imgName")
+    // String nameImage)
+    // throws IOException {
+    // Product product = new Product();
+    // product.setId(productReq.getId());
+    // product.setProductName(productReq.getProductName());
+    // product.setProductPrice(productReq.getProductPrice());
+    // product.setProductDescription(productReq.getProductDescription());
+    // String imageUUID;
+    // if (!file.isEmpty()) {
+    // imageUUID = file.getOriginalFilename();
+    // Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
+    // Files.write(fileNameAndPath, file.getBytes());
+    // } else {
+    // imageUUID = nameImage;
+    // }
+    // product.setProductImage(imageUUID);
+    // productService.addProduct(product);
+    // return "redirect:/products";
+    // }
 
     // view detail product
 
-//     @PostMapping("/admin/products/add")
-//     public String handleFormSubmit(@ModelAttribute("productDTO") Product product,
-//                                    @RequestParam("mainImage") MultipartFile multipartFile1,
-//                                    @RequestParam("extraImage1") MultipartFile multipartFile2,
-//                                    @RequestParam("extraImage2") MultipartFile multipartFile3,
-//                                    @RequestParam("extraImage3") MultipartFile multipartFile4) throws IOException {
+    // @PostMapping("/admin/products/add")
+    // public String handleFormSubmit(@ModelAttribute("productDTO") Product product,
+    // @RequestParam("mainImage") MultipartFile multipartFile1,
+    // @RequestParam("extraImage1") MultipartFile multipartFile2,
+    // @RequestParam("extraImage2") MultipartFile multipartFile3,
+    // @RequestParam("extraImage3") MultipartFile multipartFile4) throws IOException
+    // {
 
-//         String mainImage = StringUtils.cleanPath(multipartFile1.getOriginalFilename());
-//         String extraImage1 = StringUtils.cleanPath(multipartFile2.getOriginalFilename());
-//         String extraImage2 = StringUtils.cleanPath(multipartFile3.getOriginalFilename());
-//         String extraImage3 = StringUtils.cleanPath(multipartFile4.getOriginalFilename());
+    // String mainImage =
+    // StringUtils.cleanPath(multipartFile1.getOriginalFilename());
+    // String extraImage1 =
+    // StringUtils.cleanPath(multipartFile2.getOriginalFilename());
+    // String extraImage2 =
+    // StringUtils.cleanPath(multipartFile3.getOriginalFilename());
+    // String extraImage3 =
+    // StringUtils.cleanPath(multipartFile4.getOriginalFilename());
 
-//         product.setId(product.getId());
-//         product.setName(product.getName());
-// //        product.setCategory(categoryService.getCategoryById(product.getCategoryId()).get());
-//         product.setPrice(product.getPrice());
-//         product.setWeight(product.getWeight());
-//         product.setDescription(product.getDescription());
-//         product.setMainImage(product.getMainImage());
-//         product.setExtraImage1(product.getExtraImage1());
-//         product.setExtraImage2(product.getExtraImage2());
-//         product.setExtraImage3(product.getExtraImage3());
-// //        candidate.setProfilePicture(profilePictureFileName);
-// //        candidate.setPhotoId(photoIdFileName);
-// //        candidate.setDocument(documentFileName);
+    // product.setId(product.getId());
+    // product.setName(product.getName());
+    // //
+    // product.setCategory(categoryService.getCategoryById(product.getCategoryId()).get());
+    // product.setPrice(product.getPrice());
+    // product.setWeight(product.getWeight());
+    // product.setDescription(product.getDescription());
+    // product.setMainImage(product.getMainImage());
+    // product.setExtraImage1(product.getExtraImage1());
+    // product.setExtraImage2(product.getExtraImage2());
+    // product.setExtraImage3(product.getExtraImage3());
+    // // candidate.setProfilePicture(profilePictureFileName);
+    // // candidate.setPhotoId(photoIdFileName);
+    // // candidate.setDocument(documentFileName);
 
-//         Product savedProduct = productService.addProduct(product);
-//         String uploadDir = "product/" + savedProduct.getId();
+    // Product savedProduct = productService.addProduct(product);
+    // String uploadDir = "product/" + savedProduct.getId();
 
-//         FileUploadUtil.saveFile(uploadDir, mainImage, multipartFile1);
-//         FileUploadUtil.saveFile(uploadDir, extraImage1, multipartFile2);
-//         FileUploadUtil.saveFile(uploadDir, extraImage2, multipartFile3);
-//         FileUploadUtil.saveFile(uploadDir, extraImage3, multipartFile3);
+    // FileUploadUtil.saveFile(uploadDir, mainImage, multipartFile1);
+    // FileUploadUtil.saveFile(uploadDir, extraImage1, multipartFile2);
+    // FileUploadUtil.saveFile(uploadDir, extraImage2, multipartFile3);
+    // FileUploadUtil.saveFile(uploadDir, extraImage3, multipartFile3);
 
-//         return "redirect:/admin/products";
-//     }
+    // return "redirect:/admin/products";
+    // }
 
     @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
@@ -233,7 +241,6 @@ public class ProductController {
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") int id, Authentication userReq) {
         productService.addToCart(id, userReq.getName());
-
         return "redirect:/products?successAddToCart";
     }
 
@@ -242,6 +249,7 @@ public class ProductController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         List<Product> productInCart = productService.getProductInCartByUserId(currentUser.getId());
+        System.out.println(productInCart.size());
         long countPrice = productService.countPriceProducts(productInCart);
 
         model.addAttribute("total", countPrice);
