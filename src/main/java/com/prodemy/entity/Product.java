@@ -29,8 +29,20 @@ public class Product {
     @Column(name = "PRODUCT_PRICE")
     private Long productPrice;
 
-    @Column(name = "PRODUCT_IMAGE", length = 256)
-    private String productImage;
+//    @Column(name = "PRODUCT_IMAGE", length = 256)
+//    private String productImage;
+
+    @Column(name = "main_image")
+    private String mainImage;
+
+    @Column(name = "extra_image1")
+    private String extraImage1;
+
+    @Column(name = "extra_image2")
+    private String extraImage2;
+
+    @Column(name = "extra_image3")
+    private String extraImage3;
 
     @OneToMany(mappedBy = "products", fetch = FetchType.LAZY,
             cascade = CascadeType.MERGE)

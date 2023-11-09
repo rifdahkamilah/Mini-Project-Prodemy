@@ -86,7 +86,7 @@
                                            th:field="*{productName}" id="name" placeholder="Enter name">
                                 </div>
                                 <div class="">
-                                    <label for="price">Price</label>
+                                    <label for="price">Product Price</label>
                                     <input type="number" class="input input-bordered w-full max-w-xs" required
                                            th:field="*{productPrice}" name="price" id="price" placeholder="Price">
                                 </div>
@@ -99,18 +99,94 @@
                                               id="description"></textarea>
                                 </div>
 
-                                <div class="flex justify-center w-full">
-                                    <img src="#" id="imgPreview" alt=" ">
+<!--                                <div class="flex justify-center w-full">-->
+<!--                                    <img src="#" id="imgPreview" alt=" ">-->
+<!--                                </div>-->
+
+                                <div class=" ">
+                                    <label for="name">Product Image</label>
+                                    <p>
+                                        <img alt="Main Image preview" id="thumbnail0" />
+                                    </p>                    <p>Main Image</p>
+                                    <div class="custom-file">
+                                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" name="mainImage"
+                                               accept="image/jpeg, image/png"
+                                               id="mainImage"/>
+<!--                                        <label class="custom-file-label" for="mainImage">Choose file</label>-->
+                                    </div>
+<!--                                    <div class="form-group">-->
+<!--                                        <img src="#" id="imgPreview" height="100px" width="100px" -->
+<!--                                             th:src="@{${'/uploads/' + products.mainImage}}" style="margin-top: 20px" alt=" ">-->
+<!--                                    </div>-->
+                                    <input type="hidden" name="mainImage" th:value="${products.mainImage}">
                                 </div>
 
-                                <p>Product Image</p>
-                                <div class="custom-file">
-                                    <input type="file" class="file-input w-full max-w-xs file-input-bordered"
-                                           name="productImage" accept="image/jpeg, image/png" id="productImage"/>
+                                <div class=" ">
+                                    <p>
+                                        <img alt="Extra Image preview" id="thumbnail1" />
+                                    </p>                    <p>Extra Image #1</p>
+                                    <div class="custom-file">
+                                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" name="extraImage"
+                                               accept="image/jpeg, image/png"
+                                               id="extraImage1"/>
+<!--                                        <label class="custom-file-label" for="extraImage1">Choose file</label>-->
+                                    </div>
+                                    <!--                                    <div class="form-group">-->
+                                    <!--                                        <img src="#" id="imgPreview" height="100px" width="100px" -->
+                                    <!--                                             th:src="@{${'/uploads/' + products.mainImage}}" style="margin-top: 20px" alt=" ">-->
+                                    <!--                                    </div>-->
+                                    <input type="hidden" name="extraImage" th:value="${products.extraImage1}">
                                 </div>
 
-                                <input type="hidden" name="imgName" th:value="${products.productImage}">
+                                <div class=" ">
+                                    <p>
+                                        <img alt="Extra Image preview" id="thumbnail2" />
+                                    </p>                    <p>Extra Image #2</p>
+                                    <div class="custom-file">
+                                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" name="extraImage"
+                                               accept="image/jpeg, image/png"
+                                               id="extraImage2"/>
+<!--                                        <label class="custom-file-label" for="extraImage2">Choose file</label>-->
+                                    </div>
+                                    <!--                                    <div class="form-group">-->
+                                    <!--                                        <img src="#" id="imgPreview" height="100px" width="100px" -->
+                                    <!--                                             th:src="@{${'/uploads/' + products.mainImage}}" style="margin-top: 20px" alt=" ">-->
+                                    <!--                                    </div>-->
+                                    <input type="hidden" name="extraImage" th:value="${products.extraImage2}">
+                                </div>
+
+                                <div class=" ">
+                                    <p>
+                                        <img alt="Extra Image preview" id="thumbnail3" />
+                                    </p>                    <p>Extra Image #3</p>
+                                    <div class="custom-file">
+                                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" name="extraImage"
+                                               accept="image/jpeg, image/png"
+                                               id="extraImage3"/>
+<!--                                        <label class="custom-file-label" for="extraImage2">Choose file</label>-->
+                                    </div>
+                                    <!--                                    <div class="form-group">-->
+                                    <!--                                        <img src="#" id="imgPreview" height="100px" width="100px" -->
+                                    <!--                                             th:src="@{${'/uploads/' + products.mainImage}}" style="margin-top: 20px" alt=" ">-->
+                                    <!--                                    </div>-->
+                                    <input type="hidden" name="extraImage" th:value="${products.extraImage3}">
+                                </div>
+
                                 <button type="submit" class="btn btn-ghost bg-green-100 mt-4 text-black">Submit</button>
+
+
+
+
+<!--                                before-->
+
+                                <!--                                <p>Product Image</p>-->
+<!--                                <div class="custom-file">-->
+<!--                                    <input type="file" class="file-input w-full max-w-xs file-input-bordered"-->
+<!--                                           name="productImage" accept="image/jpeg, image/png" id="productImage"/>-->
+<!--                                </div>-->
+
+<!--                                <input type="hidden" name="imgName" th:value="${products.productImage}">-->
+<!--                                <button type="submit" class="btn btn-ghost bg-green-100 mt-4 text-black">Submit</button>-->
                             </div>
                         </div>
                     </form>
