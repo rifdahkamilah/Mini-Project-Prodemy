@@ -1,6 +1,5 @@
 package com.prodemy.services;
 
-import com.prodemy.entity.Cart;
 import com.prodemy.entity.HistoryPemesanan;
 import com.prodemy.entity.Product;
 
@@ -19,10 +18,6 @@ public interface ProductService {
 
     List<Product> findProductsByPriceRangeAndName(long minPrice, long maxPrice, String name);
 
-    // void saveProduct(Product product);
-    //
-    // void deleteProductById(long id);
-
     void addProduct(Product product);
 
     public void editProduct(Product product);
@@ -37,6 +32,5 @@ public interface ProductService {
 
     public List<HistoryPemesanan> getHistoryByIdUser(long id);
 
-    // List<Product> getAllPaymentMethods();
 
 }

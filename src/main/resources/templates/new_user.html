@@ -1,115 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>List Product</title>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-</head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  </head>
 
-<body style="font-family: Cambria, sans-serif; font-size: 20px;">
+  <body style="font-family: Cambria, sans-serif; font-size: 20px">
     <div data-theme="aqua" class="min-h-screen">
-        <div class="navbar bg-white px-20">
-            <div class="flex-1">
-              <a class="normal-case text-xl text-black font-bold">Mini Project Prodemy</a>
-            </div>
-            <div class="flex-none">
-              <div class="">
-                <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
-              </div>
-              <div class="dropdown dropdown-end">
-                <label tabindex="0" class="btn btn-circle bg-white border-none hover:bg-white">
-                  <div class="indicator">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-black fill-white" viewBox="0 0 24 24" stroke="currentColor">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                      />
-                    </svg>
-                    <div th:if="${cartCount != 0}">
-                      <span class="badge badge-sm indicator-item" th:text="${cartCount}"></span>
-                    </div>
-                  </div>
-                </label>
-                <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-                  <div class="card-body w-full">
-                    <span class="font-bold text-lg"><span th:text="${cartCount}"></span> Items</span>
-                    <div class="card-actionsl">
-                      <a th:href="@{/users/cart/current}">
-                        <button class="btn btn-primary btn-block w-full">View cart</button>
-                      </a>
-                    </div>
-                  </div>
+      <div class="navbar bg-white px-20">
+        <div class="flex-1">
+          <a class="normal-case text-xl text-black font-bold">Mini Project Prodemy</a>
+        </div>
+        <div class="flex-none">
+          <div class="">
+            <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
+          </div>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-circle bg-white border-none hover:bg-white">
+              <div class="indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-black fill-white" viewBox="0 0 24 24" stroke="currentColor">
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+                <div th:if="${cartCount != 0}">
+                  <span class="badge badge-sm indicator-item" th:text="${cartCount}"></span>
                 </div>
               </div>
-              <div class="dropdown dropdown-end">
-                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-                  <div class="w-10 rounded-full">
-                    <img th:src="@{/uploads/profilephoto.jpg}" />
-                  </div>
-                </label>
-                <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                  <li>
-                    <a th:href="@{/users/view/current}">Profile</a>
-                  </li>
-                  <li><a th:href="@{/logout}">Logout</a></li>
-                </ul>
+            </label>
+            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
+              <div class="card-body w-full">
+                <span class="font-bold text-lg"><span th:text="${cartCount}"></span> Items</span>
+                <div class="card-actionsl">
+                  <a th:href="@{/users/cart/current}">
+                    <button class="btn btn-primary btn-block w-full">View cart</button>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-        <div class="px-20 mt-10 w-full ">
-            <span class="material-symbols-outlined cursor:pointer text-3xl text-black  hover:text-white">
-                <a th:href="@{/users}">
-                    arrow_back
-                </a>
-            </span>
+          <div class="dropdown dropdown-end">
+            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+              <div class="w-10 rounded-full">
+                <img th:src="@{/uploads/profilephoto.jpg}" />
+              </div>
+            </label>
+            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <a th:href="@{/users/view/current}">Profile</a>
+              </li>
+              <li>
+                <a th:href="@{/cart}">Detail Pesanan</a>
+              </li>
+              <li>
+                <a th:href="@{/histori}">Histori Pesanan</a>
+              </li>
+              <li><a th:href="@{/logout}">Logout</a></li>
+            </ul>
+          </div>
         </div>
+      </div>
+      <div class="px-20 mt-10 w-full">
+        <span class="material-symbols-outlined cursor:pointer text-3xl text-black hover:text-white">
+          <a th:href="@{/users}"> arrow_back </a>
+        </span>
+      </div>
 
-        <div class="flex justify-center">
-            <div class="flex-none gap-2">
-                <div class="form-control">
-                    <div class="container">
-                        <h3
-                            style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 30px;">
-                            Add a new User </h3>
-                        <form th:action="@{/users/add}" method="post" th:object="${user}" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="flex flex-col gap-4">
-
-                                    <!--        <input type="hidden" name="id" th:field="*{id}">-->
-                                    <div class="flex flex-col">
-                                        <label for="name">Name</label>
-                                        <input  type="text"
-                                            class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
-                                            required th:field="*{name}" id="name" placeholder="Enter name">
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="email">Email</label>
-                                        <input  type="text"
-                                            class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
-                                            required th:field="*{email}" id="email" placeholder="Enter Email">
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <label for="password">Password</label>
-                                        <input  type="password"
-                                            class="input input-bordered w-24 md:w-auto bg-white shadow text-black"
-                                            required th:field="*{password}" id="password" placeholder="Enter Password">
-                                    </div>
-                                    <button class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
-
-                        </form>
+      <div class="flex justify-center">
+        <div class="flex-none gap-2">
+          <div class="form-control">
+            <div class="container">
+              <h3 style="color: white; text-transform: uppercase; font-weight: bold; text-align: center; font-size: 30px">Add a new User</h3>
+              <form th:action="@{/users/add}" method="post" th:object="${user}" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="flex flex-col gap-4">
+                    <div class="flex flex-col">
+                      <label for="name">Name</label>
+                      <input type="text" class="input input-bordered w-24 md:w-auto bg-white shadow text-black" required th:field="*{name}" id="name" placeholder="Enter name" />
                     </div>
+                    <div class="flex flex-col">
+                      <label for="email">Email</label>
+                      <input type="text" class="input input-bordered w-24 md:w-auto bg-white shadow text-black" required th:field="*{email}" id="email" placeholder="Enter Email" />
+                    </div>
+                    <div class="flex flex-col">
+                      <label for="password">Password</label>
+                      <input type="password" class="input input-bordered w-24 md:w-auto bg-white shadow text-black" required th:field="*{password}" id="password" placeholder="Enter Password" />
+                    </div>
+                    <button class="btn btn-primary">Submit</button>
+                  </div>
                 </div>
+              </form>
             </div>
+          </div>
         </div>
-</body>
-
+      </div>
+    </div>
+  </body>
 </html>

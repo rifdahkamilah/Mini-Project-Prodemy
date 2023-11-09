@@ -13,6 +13,5 @@ public class ProductEditRequest {
     private String productName;
     private String productDescription;
     private long productPrice;
-    // private String product_Image;
 
 }

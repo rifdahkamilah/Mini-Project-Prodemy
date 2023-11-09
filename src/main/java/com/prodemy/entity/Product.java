@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -30,11 +28,11 @@ public class Product {
     @Column(name = "PRODUCT_PRICE")
     private Long productPrice;
 
-   @Column(name = "PRODUCT_IMAGE", length = 256)
-   private String productImage;
+    @Column(name = "PRODUCT_IMAGE", length = 256)
+    private String productImage;
 
-    @Column(name = "main_image")
-    private String mainImage;
+    @Column(name = "extra_image4")
+    private String extraImage4;
 
     @Column(name = "extra_image1")
     private String extraImage1;
@@ -45,7 +43,6 @@ public class Product {
     @Column(name = "extra_image3")
     private String extraImage3;
 
-    @OneToMany(mappedBy = "products", fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "products", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Cart> carts;
 }

@@ -10,15 +10,15 @@ import com.prodemy.repository.ProductRepository;
 import com.prodemy.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 import java.util.Optional;
@@ -117,6 +117,7 @@ public class ProductServiceImplementation implements ProductService {
                 }
             }
         }
+
         return product;
     }
 

@@ -57,6 +57,12 @@
               <li>
                 <a th:href="@{/users/view/current}">Profile</a>
               </li>
+              <li>
+                <a th:href="@{/cart}">Detail Pesanan</a>
+              </li>
+              <li>
+                <a th:href="@{/histori}">Histori Pesanan</a>
+              </li>
               <li><a th:href="@{/logout}">Logout</a></li>
             </ul>
           </div>
@@ -90,15 +96,61 @@
                       </label>
                       <textarea class="textarea textarea-bordered" rows="5" th:field="*{productDescription}" name="description" id="description"></textarea>
                     </div>
+                    <div class=" ">
+                      <label for="name">Product Image</label>
+                      <div>
+                        <img alt="Main Image preview" th:src="@{${'/uploads/' + product.productImage}}" id="imgPreview" class="w-56" />
+                      </div>
+                      <p>Main Image</p>
+                      <div class="custom-file">
+                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{productImage}" name="productImage" accept="image/jpeg, image/png" id="productImage" />
+                      </div>
+                      <input type="hidden" name="imageNameMain" id="imageNameMain" th:value="${product.productImage}" />
+                    </div>
 
-                    <div class="flex justify-center w-full">
-                      <img id="imgPreview" alt=" " th:src="@{${'/uploads/' + product.productImage}}" class="w-56" />
+                    <div class="mt-4">
+                      <div>
+                        <img alt="Extra Image preview" id="imgPreview1" th:src="@{${'/uploads/' + product.extraImage1}}" class="w-56" />
+                      </div>
+                      <p>Extra Image 1</p>
+                      <div class="custom-file">
+                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{extraImage1}" name="extraImage1" accept="image/jpeg, image/png" id="extraImage1" />
+                      </div>
+                      <input type="hidden" name="imageNameExtra1" id="imageNameExtra1" th:value="${product.extraImage1}" />
                     </div>
-                    <p>Product Image</p>
-                    <div class="custom-file">
-                      <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{productImage}" name="productImage" accept="image/jpeg, image/png" id="productImage" />
+
+                    <div class="mt-4">
+                      <div>
+                        <img alt="Extra Image preview" id="imgPreview2" th:src="@{${'/uploads/' + product.extraImage2}}" class="w-56" />
+                      </div>
+                      <p>Extra Image 2</p>
+                      <div class="custom-file">
+                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{extraImage2}" name="extraImage2" accept="image/jpeg, image/png" id="extraImage2" />
+                      </div>
+                      <input type="hidden" name="imageNameExtra2" id="imageNameExtra2" th:value="${product.extraImage2}" />
                     </div>
-                    <input type="hidden" name="imgName" th:value="${product.productImage}" />
+
+                    <div class="mt-4">
+                      <div>
+                        <img alt="Extra Image preview" id="imgPreview3" th:src="@{${'/uploads/' + product.extraImage3}}" class="w-56" />
+                      </div>
+                      <p>Extra Image 3</p>
+                      <div class="custom-file">
+                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{extraImage3}" name="extraImage3" accept="image/jpeg, image/png" id="extraImage3" />
+                      </div>
+                      <input type="hidden" name="imageNameExtra3" id="imageNameExtra3" th:value="${product.extraImage3}" />
+                    </div>
+
+                    <div class="mt-4">
+                      <div>
+                        <img alt="Extra Image preview" id="imgPreview4" th:src="@{${'/uploads/' + product.extraImage4}}" class="w-56" />
+                      </div>
+                      <p>Extra Image 4</p>
+                      <div class="custom-file">
+                        <input type="file" class="file-input w-full max-w-xs file-input-bordered" th:field="*{extraImage4}" name="extraImage4" accept="image/jpeg, image/png" id="extraImage4" />
+                      </div>
+                      <input type="hidden" name="imageNameExtra4" id="imageNameExtra4" th:value="${product.extraImage4}" />
+                    </div>
                     <button type="submit" class="btn btn-ghost bg-green-100 mt-4 text-black">Submit</button>
                   </div>
                 </div>
@@ -113,7 +165,7 @@
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
   <script>
-    function readURL(input) {
+    function readURLMainImage(input) {
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
@@ -122,12 +174,65 @@
         reader.readAsDataURL(input.files[0]);
       }
     }
+
+    function readURLExtraOne(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imgPreview1").attr("src", e.target.result).width(100).height(100);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function readURLExtraTwo(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imgPreview2").attr("src", e.target.result).width(100).height(100);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function readURLExtraThree(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imgPreview3").attr("src", e.target.result).width(100).height(100);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function readURLExtraFour(input) {
+      if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          $("#imgPreview4").attr("src", e.target.result).width(100).height(100);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
     $("#productImage").change(function () {
-      readURL(this);
+      readURLMainImage(this);
     });
-    $(".custom-file-input").on("change", function () {
-      var fileName = $(this).val().split("\\").pop();
-      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+
+    $("#extraImage1").change(function () {
+      readURLExtraOne(this);
+    });
+
+    $("#extraImage2").change(function () {
+      readURLExtraTwo(this);
+    });
+
+    $("#extraImage3").change(function () {
+      readURLExtraThree(this);
+    });
+
+    $("#extraImage4").change(function () {
+      readURLExtraFour(this);
     });
   </script>
 </html>
