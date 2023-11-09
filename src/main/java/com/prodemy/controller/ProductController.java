@@ -30,7 +30,7 @@ import org.thymeleaf.util.StringUtils;
 @Controller
 public class ProductController {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/demo/src/main/resources/static/uploads";
 
     @Autowired
     private ProductService productService;
@@ -158,27 +158,27 @@ public class ProductController {
         return "edit_product";
     }
 
-//    @PostMapping("/product/update")
-//    public String updateProductPost(@ModelAttribute("products") ProductEditRequest productReq,
-//            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
-//            throws IOException {
-//        Product product = new Product();
-//        product.setId(productReq.getId());
-//        product.setProductName(productReq.getProductName());
-//        product.setProductPrice(productReq.getProductPrice());
-//        product.setProductDescription(productReq.getProductDescription());
-//        String imageUUID;
-//        if (!file.isEmpty()) {
-//            imageUUID = file.getOriginalFilename();
-//            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
-//            Files.write(fileNameAndPath, file.getBytes());
-//        } else {
-//            imageUUID = nameImage;
-//        }
-//        product.setProductImage(imageUUID);
-//        productService.addProduct(product);
-//        return "redirect:/products";
-//    }
+    @PostMapping("/product/update")
+    public String updateProductPost(@ModelAttribute("products") ProductEditRequest productReq,
+            @RequestParam("productImage") MultipartFile file, @RequestParam("imgName") String nameImage)
+            throws IOException {
+        Product product = new Product();
+        product.setId(productReq.getId());
+        product.setProductName(productReq.getProductName());
+        product.setProductPrice(productReq.getProductPrice());
+        product.setProductDescription(productReq.getProductDescription());
+        String imageUUID;
+        if (!file.isEmpty()) {
+            imageUUID = file.getOriginalFilename();
+            Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, imageUUID);
+            Files.write(fileNameAndPath, file.getBytes());
+        } else {
+            imageUUID = nameImage;
+        }
+        product.setProductImage(imageUUID);
+        productService.addProduct(product);
+        return "redirect:/products";
+    }
 
     // view detail product
 

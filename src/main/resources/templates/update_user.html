@@ -1,106 +1,125 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Edit User</title>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-  </head>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"/>
+</head>
 
-  <body data-theme="aqua">
-    <div class="flex flex-col min-h-screen">
-      <div class="navbar bg-white px-20">
+<body data-theme="aqua">
+<div class="flex flex-col min-h-screen">
+    <div class="navbar bg-white px-20">
         <div class="flex-1">
-          <a class="normal-case text-xl text-black font-bold">Mini Project Prodemy</a>
+            <a class="normal-case text-xl text-black font-bold">Mini Project Prodemy</a>
         </div>
         <div class="flex-none">
-          <div class="">
-            <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
-          </div>
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-circle bg-white border-none hover:bg-white">
-              <div class="indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-black fill-white" viewBox="0 0 24 24" stroke="currentColor">
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-                <div th:if="${cartCount != 0}">
-                  <span class="badge badge-sm indicator-item" th:text="${cartCount}"></span>
-                </div>
-              </div>
-            </label>
-            <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
-              <div class="card-body w-full">
-                <span class="font-bold text-lg"><span th:text="${cartCount}"></span> Items</span>
-                <div class="card-actionsl">
-                  <a th:href="@{/users/cart/current}">
-                    <button class="btn btn-primary btn-block w-full">View cart</button>
-                  </a>
-                </div>
-              </div>
+            <div class="">
+                <p class="text-black normal-case">Hi, <span th:text="${nameCurrentUser}"></span></p>
             </div>
-          </div>
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
-                <img th:src="@{/uploads/profilephoto.jpg}" />
-              </div>
-            </label>
-            <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-              <li>
-                <a th:href="@{/users/view/current}">Profile</a>
-              </li>
-              <li><a th:href="@{/logout}">Logout</a></li>
-            </ul>
-          </div>
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-circle bg-white border-none hover:bg-white">
+                    <div class="indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 stroke-black fill-white"
+                             viewBox="0 0 24 24" stroke="currentColor">
+                            <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+                            />
+                        </svg>
+                        <div th:if="${cartCount != 0}">
+                            <span class="badge badge-sm indicator-item" th:text="${cartCount}"></span>
+                        </div>
+                    </div>
+                </label>
+                <div tabindex="0" class="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow">
+                    <div class="card-body w-full">
+                        <span class="font-bold text-lg"><span th:text="${cartCount}"></span> Items</span>
+                        <div class="card-actionsl">
+                            <a th:href="@{/users/cart/current}">
+                                <button class="btn btn-primary btn-block w-full">View cart</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-10 rounded-full">
+                        <img th:src="@{/uploads/profilephoto.jpg}"/>
+                    </div>
+                </label>
+                <ul tabindex="0"
+                    class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+                    <li>
+                        <a th:href="@{/users/view/current}">Profile</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/cart}">Detail Pesanan</a>
+                    </li>
+                    <li>
+                        <a th:href="@{/histori}">Histori Pesanan</a>
+                    </li>
+                    <li><a th:href="@{/logout}">Logout</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
-      <div class="flex px-20 mt-10 w-full cursor:pointer text-3xl text-black hover:text-white">
+    </div>
+    <div class="flex px-20 mt-10 w-full cursor:pointer text-3xl text-black hover:text-white">
         <span class="material-symbols-outlined">
           <a th:href="@{/users}"> arrow_back </a>
         </span>
-      </div>
-      <div class="flex justify-center items-center items-center">
-        <form th:action="@{/users/update}" th:method="post" th:object="${user}">
-          <div>
-            <div class="card w-96 bg-primary bg-white shadow text-black text-primary-content">
-              <div class="card-body">
-                <h2 class="card-title justify-center text-2xl font-bold">Edit User</h2>
-
-                <div class="flex justify-center">
-                  <div class="form-control w-full max-w-xs">
-                    <label class="label">
-                      <span class="label-text text-black">Username</span>
-                    </label>
-                    <input type="text" placeholder="Type your username here" name="username" class="input input-bordered input-info w-full max-w-xs text-black bg-white" th:field="*{name}" />
-                  </div>
-                </div>
-                <input hidden type="text" name="id" id="id" th:field="*{id}" />
-                <div class="flex justify-center">
-                  <div class="form-control w-full max-w-xs justify-center">
-                    <label class="label">
-                      <span class="label-text text-black">Password</span>
-                    </label>
-                    <input type="password" placeholder="Type your email here" name="password" class="input input-bordered input-info w-full max-w-xs text-black bg-white" th:field="*{password}" />
-                  </div>
-                </div>
-                <div class="card-actions justify-center">
-                  <button class="btn">Edit Profile</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <div class="flex justify-center items-center items-center">
+        <form th:action="@{/users/update}" th:method="post" th:object="${user}">
+            <div>
+                <div class="card w-96 bg-primary bg-white shadow text-black text-primary-content">
+                    <div class="card-body">
+                        <h2 class="card-title justify-center text-2xl font-bold">Edit User</h2>
+
+                        <div class="flex justify-center">
+                            <div class="form-control w-full max-w-xs">
+                                <label class="label">
+                                    <span class="label-text text-black">Username</span>
+                                </label>
+                                <input type="text" placeholder="Type your username here" name="username"
+                                       class="input input-bordered input-info w-full max-w-xs text-black bg-white"
+                                       th:field="*{name}"/>
+                            </div>
+                        </div>
+                        <input hidden type="text" name="id" id="id" th:field="*{id}"/>
+                        <div class="flex justify-center">
+                            <div class="form-control w-full max-w-xs justify-center">
+                                <label class="label">
+                                    <span class="label-text text-black">Password</span>
+                                </label>
+                                <input type="password" placeholder="Type your password here" name="password"
+                                       class="input input-bordered input-info w-full max-w-xs text-black bg-white"
+                                       th:field="*{password}"/>
+                            </div>
+                        </div>
+                        <div class="card-actions justify-center">
+                            <button class="btn">Edit Profile</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 </html>

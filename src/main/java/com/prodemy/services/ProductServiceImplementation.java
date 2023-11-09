@@ -106,19 +106,39 @@ public class ProductServiceImplementation implements ProductService {
         productRepository.save(product);
     }
 
+//    @Override
+//    public List<Product> getProductInCartByUserId(long id) {
+//        List<Cart> cart = cartRepository.getCartByUserId(id);
+//        List<Product> product = new ArrayList<Product>(cart.size());
+//        if (cart.size() > 0) {
+//            for (int i = 0; i < cart.size(); i++) {
+//                if (cart.get(0).getStatus().equals("belum terbayar")) {
+//                    product.add(productRepository.findById(cart.get(i).getProducts().getId()).orElse(null));
+//                }
+//            }
+//        }
+//        return product;
+//    }
+
     @Override
     public List<Product> getProductInCartByUserId(long id) {
         List<Cart> cart = cartRepository.getCartByUserId(id);
-        List<Product> product = new ArrayList<Product>(cart.size());
-        if (cart.size() > 0) {
-            for (int i = 0; i < cart.size(); i++) {
-                if (cart.get(0).getStatus().equals("belum terbayar")) {
-                    product.add(productRepository.findById(cart.get(i).getProducts().getId()).orElse(null));
+        List<Product> products = new ArrayList<>();
+
+        if (cart != null && cart.size() > 0) {
+            for (Cart cartItem : cart) {
+                if ("belum terbayar".equals(cartItem.getStatus()) && cartItem.getProducts() != null) {
+                    Product product = productRepository.findById(cartItem.getProducts().getId()).orElse(null);
+                    if (product != null) {
+                        products.add(product);
+                    }
                 }
             }
         }
-        return product;
+
+        return products;
     }
+
 
     @Override
     public long countPriceProducts(List<Product> products) {
