@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class ProductController {
 
-    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/src/main/resources/static/uploads";
+    public static String UPLOAD_DIRECTORY = System.getProperty("user.dir") + "/demo/src/main/resources/static/uploads";
 
     @Autowired
     private ProductService productService;
@@ -256,7 +256,6 @@ public class ProductController {
         return "redirect:/products";
     }
 
-
     @GetMapping({ "/product/viewproduct/{id}" })
     public String viewProduct(Model model, @PathVariable int id) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -311,7 +310,7 @@ public class ProductController {
     }
 
     @GetMapping("/histori")
-    public String getHisTory(Model model) {
+    public String getHisToryCurrentUser(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         UserDto currentUser = userService.getCurrentUser(auth.getName());
         List<HistoryPemesanan> historyPemesananan = productService.getHistoryByIdUser(currentUser.getId());
@@ -321,5 +320,28 @@ public class ProductController {
         return "history";
     }
 
-    
+    @GetMapping("/users/cart/history/{id}")
+    public String getHistoryUser(Model model, @PathVariable("id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<HistoryPemesanan> historyPemesananan = productService.getHistoryByIdUser(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("histories", historyPemesananan);
+        return "viewHistoryUser";
+    }
+
+    @GetMapping("/users/cart/{id}")
+    public String getCartUser(Model model, @PathVariable("id") long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        UserDto currentUser = userService.getCurrentUser(auth.getName());
+        List<Product> productInCart = productService.getProductInCartByUserId(id);
+
+        model.addAttribute("id", id);
+        model.addAttribute("nameCurrentUser", currentUser.getName());
+        model.addAttribute("products", productInCart);
+        return "viewCartUser";
+    }
+
 }

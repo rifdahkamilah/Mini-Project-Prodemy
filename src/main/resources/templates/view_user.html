@@ -100,10 +100,10 @@
                             </a>
                         </div>
                         <div class="flex justify-center mt-4 gap-4">
-                            <a th:href="@{/cart/{id}(id=${user.id})}" class="btn btn-ghost btn-sm">
+                            <a th:href="@{/users/cart/{id}(id=${user.id})}" class="btn btn-info btn-sm">
                                 <button>Order Detail</button>
                             </a>
-                            <a th:href="@{/history/{id}(id=${user.id})}" class="btn btn-ghost btn-sm">
+                            <a th:href="@{/users/cart/history/{id}(id=${user.id})}" class="btn btn-info btn-sm">
                                 <button>Transaction History</button>
                             </a>
                         </div>

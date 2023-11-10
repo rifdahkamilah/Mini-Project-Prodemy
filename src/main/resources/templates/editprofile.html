@@ -71,7 +71,7 @@
     <div class="card w-96 bg-white shadow text-primary-content">
         <div class="card-body">
             <h2 class="card-title justify-center">Edit Profile</h2>
-            <form th:action="@{/users/edit/current}" th:method="get" th:object="${user}">
+            <form th:action="@{/users/edit/current}" th:method="post" th:object="${user}">
                 <div class="flex justify-center">
                     <div class="form-control w-full max-w-xs">
                         <label class="label">
@@ -95,7 +95,6 @@
                             Cancel Edit </a></label>
                     </div>
                 </div>
-
                 <button class="btn btn-success w-full">Save</button>
             </form>
         </div>

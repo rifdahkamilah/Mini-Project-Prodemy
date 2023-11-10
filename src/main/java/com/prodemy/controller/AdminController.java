@@ -81,10 +81,9 @@ public class AdminController {
         User user = userService.getUserById(id);
         if (user != null) {
             model.addAttribute("user", user);
-            System.out.println("YAY");
+
         } else {
             model.addAttribute("user", new User());
-            System.out.println("Bag of d**ks");
         }
         model.addAttribute("cartCount", cartCount);
         model.addAttribute("nameCurrentUser", currentUser.getName());

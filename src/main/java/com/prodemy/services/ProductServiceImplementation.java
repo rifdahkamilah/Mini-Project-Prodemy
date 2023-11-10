@@ -10,15 +10,12 @@ import com.prodemy.repository.ProductRepository;
 import com.prodemy.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpStatus;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import java.util.List;
 
 import java.util.Optional;
@@ -36,7 +33,7 @@ public class ProductServiceImplementation implements ProductService {
     private CartRepository cartRepository;
 
     @Autowired
-    private HistoryPemesananRepository historyPemesanantRepository;
+    private HistoryPemesananRepository historyPemesananRepository;
 
     @Override
     public List<Product> getAllProducts() {
@@ -107,33 +104,6 @@ public class ProductServiceImplementation implements ProductService {
     }
 
     @Override
-    public List<Product> getProductInCartByUserId(long id) {
-        List<Cart> cart = cartRepository.getCartByUserId(id);
-        List<Product> products = new ArrayList<>(cart.size());
-        if (cart != null && cart.size() > 0) {
-            for (Cart cartItem : cart) {
-                if (cartItem.getStatus().equals("belum terbayar") && cartItem.getProducts() != null) {
-                    Product product = productRepository.findById(cartItem.getProducts().getId()).orElse(null);
-                    if (product != null) {
-                        products.add(product);
-                    }
-                }
-            }
-        }
-
-        return products;
-    }
-
-    @Override
-    public long countPriceProducts(List<Product> products) {
-        long countPrice = 0;
-        for (int i = 0; i < products.size(); i++) {
-            countPrice += products.get(i).getProductPrice();
-        }
-        return countPrice;
-    }
-
-    @Override
     public void addPaymentAndaddDelivery(String paymentMethod, String deliveryMethod, long id) throws Exception {
         List<Cart> cart = cartRepository.getCartByUserId(id);
         LocalDate today = LocalDate.now();
@@ -141,10 +111,10 @@ public class ProductServiceImplementation implements ProductService {
         List<HistoryPemesanan> history = new ArrayList<HistoryPemesanan>(cart.size());
         List<Product> products = new ArrayList<Product>(cart.size());
 
-        if (cart.size() > 0) {
-            for (int i = 0; i < cart.size(); i++) {
-                if (cart.get(i).getStatus().equals("belum terbayar")) {
-                    products.add(productRepository.findById(cart.get(i).getProducts().getId()).orElse(null));
+        if (cart.size() > 0 && cart != null) {
+            for (Cart cartItem : cart) {
+                if (cartItem.getProducts() != null && cartItem.getStatus().equals("belum terbayar")) {
+                    products.add(productRepository.findById(cartItem.getProducts().getId()).orElse(null));
                 }
             }
         } else {
@@ -163,7 +133,7 @@ public class ProductServiceImplementation implements ProductService {
             for (int j = 0; j < products.size(); j++) {
                 history.add(new HistoryPemesanan(0, products.get(j).getProductName(), products.get(j).getProductImage(),
                         products.get(j).getProductPrice(), today, user));
-                historyPemesanantRepository.save(history.get(j));
+                historyPemesananRepository.save(history.get(j));
             }
         } else {
             throw new Exception("User ini tidak memiliki cart");
@@ -171,8 +141,37 @@ public class ProductServiceImplementation implements ProductService {
     }
 
     @Override
+    public List<Product> getProductInCartByUserId(long id) {
+        List<Cart> cart = cartRepository.getCartByUserId(id);
+        List<Product> products = new ArrayList<>();
+
+        if (cart != null && cart.size() > 0) {
+            for (Cart cartItem : cart) {
+                if ("belum terbayar".equals(cartItem.getStatus()) && cartItem.getProducts() != null) {
+                    Product product = productRepository.findById(cartItem.getProducts().getId()).orElse(null);
+                    if (product != null) {
+                        products.add(product);
+                    }
+                }
+            }
+        }
+
+        return products;
+    }
+
+
+    @Override
+    public long countPriceProducts(List<Product> products) {
+        long countPrice = 0;
+        for (int i = 0; i < products.size(); i++) {
+            countPrice += products.get(i).getProductPrice();
+        }
+        return countPrice;
+    }
+
+    @Override
     public List<HistoryPemesanan> getHistoryByIdUser(long id) {
-        List<HistoryPemesanan> historyPemesanan = historyPemesanantRepository.getHistoryByUserId(id);
+        List<HistoryPemesanan> historyPemesanan = historyPemesananRepository.getHistoryByUserId(id);
         return historyPemesanan;
     }
 }

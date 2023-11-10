@@ -102,7 +102,7 @@
                     </div>
                     <div th:if="${role == 'ADMIN'}">
                         <div>
-                            <a th:href="@{/products/add}" class="btn btn-info btn-sm mb-3">Add Product</a>
+                            <a th:href="@{/products/add}" class="btn btn-primary btn-sm mb-3">Add Product</a>
                         </div>
                     </div>
                 </div>
@@ -134,7 +134,7 @@
                                 </a>
                             </td>
                             <td><a th:href="@{/product/viewproduct/{id}(id=${product.id})}"
-                                   class="btn btn-success btn-sm">Detail Product </a></td>
+                                   class="btn btn-warning btn-sm">Detail Product </a></td>
                             <div th:if="${role == 'ADMIN'}">
                                 <td><a th:href="@{/product/delete/{id}(id=${product.id})}"
                                        class="btn btn-error btn-sm"> Delete Product </a></td>
